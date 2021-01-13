@@ -1,0 +1,156 @@
+<%- include('../../includes/header')-%>
+        <div id="wrapper" class="wrapper" >
+            <%- include('../../includes/topbar')-%>
+            <div class="page-wrap">
+                <%- include('../../includes/sidebar')-%>
+                <div class="main-content">
+                    <div class="container-fluid">
+                        <div class="row clearfix">
+                            <div class="col-md-10">
+                                <h1 class="text-center"><%= title %></h1>
+                            </div>
+                            
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-12">
+                                <a href="/pd/localOfficeBuilidingForm" class="btn btn-success btn-group-sm ">আঞ্চলিক অফিস ভবন নির্মাণ ফর্ম</a>
+                            </div>
+
+                        </div>
+
+                        <div class="table-responsive" id="output">
+                            <%if (records.length >0){ %>
+                                <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+                                <thead>
+                                <tr>
+                                    <th>ক্রমিক নং</th>
+                                    <th>আয়তন</th>
+                                    <th>প্রাক্কলিত ব্যয়</th>
+                                    <th>বাস্তবায়নকাল</th>
+                                    <th>ঠিকাদারী প্রতিষ্ঠানের নাম</th>
+                                    <th>অগ্রগতি(%)</th>
+                                    <th>পরিবর্তন/মুছুন</th>
+                            
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <% records.forEach(function(row,index){ %>
+                                        <tr>
+                                            <td><%= index+1 %></td>
+                                            <td><%= row.area %></td>
+                                            <td><%= row.expense %></td>
+                                            <td><%= row.time %></td>
+                                            <td><%= row.company %></td>
+                                            <td><%= row.progress%></td>
+                                            <td><a class="btn btn-primary btn-xs" href="/pd/localOfficeBuilidingEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-danger btn-xs" href="/pd/localOfficeBuilidingDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                            <% }else{ %>
+                                <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                                    <thead>
+                                    <tr>
+                                        <th>ক্রমিক নং</th>
+                                        <th>আয়তন</th>
+                                        <th>প্রাক্কলিত ব্যয়</th>
+                                        <th>বাস্তবায়নকাল</th>
+                                        <th>ঠিকাদারী প্রতিষ্ঠানের নাম</th>
+                                        <th>অগ্রগতি(%)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% records.forEach(function(row){ %>
+                                        <tr>
+                                            <td colspan="10">No data Found</td>
+                                        </tr>
+                                    <% }) %>
+                                    </tbody>
+                                </table>
+                            <% } %>
+                        </div>
+
+                        <input type="button" id="btnExport" value="Download PDF" />
+                        <button onclick="exportToExcel('tblexportData', 'উদ্বুদ্ধকরণ ভ্রমণ তথ্য')" class="btn btn-success">Export Table Data To Excel File</button>
+
+                        <div id="output"></div>
+        <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+   
+<%- include('../../includes/footer')-%>
+<script>
+        
+    $(document).ready(function(){
+        
+      $('.dropdown a.test').on("click", function(e){
+        $(this).next('ul').toggle();
+        e.stopPropagation();
+        e.preventDefault();
+      });
+    });
+</script>
+<script type="text/javascript">
+    function exportToExcel(tableID, filename = ''){
+        var downloadurl;
+        var dataFileType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(tableID);
+        var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+        
+        // Specify file name
+        filename = filename?filename+'.xls':'export_excel_data.xls';
+        
+        // Create download link element
+        downloadurl = document.createElement("a");
+        
+        document.body.appendChild(downloadurl);
+        
+        if(navigator.msSaveOrOpenBlob){
+            var blob = new Blob(['\ufeff', tableHTMLData], {
+                type: dataFileType
+            });
+            navigator.msSaveOrOpenBlob( blob, filename);
+        }else{
+            // Create a link to the file
+            downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+        
+            // Setting the file name
+            downloadurl.download = filename;
+            
+            //triggering the function
+            downloadurl.click();
+        }
+    }
+     
+</script>
+<script type="text/javascript">
+   
+    $("body").on("click", "#btnExport", function () {
+        html2canvas($('#tblCustomers')[0], {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 650
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("farmer-details.pdf");
+            }
+        });
+    });
+
+    
+    $(document).ready(function() {
+        $('#tblCustomers').DataTable();
+    } );
+
+    
+
+</script>

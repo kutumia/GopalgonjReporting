@@ -1,0 +1,66 @@
+<%if (records.length >0){ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th>ক্রমিক নং</th>
+        <th>কৃষকের নাম ও পিতা/স্বামীর নাম</th>
+        <th>গ্রাম/ব্লক</th>
+        <th>কৃষকের মোবাইল নম্বর</th>
+        <th>ব্যবহৃত জাত</th>
+        <th>রোপন/স্থাপনের তারিখ </th>
+        <th>কর্তন ফসল সংগ্রহের তারিখ</th>
+        <th>উৎপাদন টন/হেঃ</th>
+        <th>কৃষকের মন্তব্য</th>
+        <th>উপজেলা কৃষি অফিসারের মন্তব্য</th>
+        <th>জেলা পরিচালকের মন্তব্য</th>
+        <th>প্রজেক্ট পরিচালকের মন্তব্য</th>
+        <th>মন্তব্য করুন</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% records.forEach(function(row,index){ %>
+            <tr>
+                <td><%= index+1 %></td>
+                <td><%= row.name %></td>
+                <td><%= row.vname %></td>
+                <td><%= row.mnum %></td>
+                <td><%= row.breedname %></td>
+                <td><%= row.trialdate %></td>
+                <td><%= row.cdate %></td>
+                <td><%= row.production %></td>
+                <td><%= row.fcomment %></td>
+                <td><%= row.kcomment %></td>
+                <td><%= row.ddComment %></td>
+                <td><%= row.pdComment %></td>
+                <td><a class="btn btn-primary btn-xs" href="/dd/finalTrialEdit/<%= row.id %>"><i class="fa fa-edit"></i></a></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+<% }else{ %>
+    <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>ক্রমিক নং</th>
+        <th>কৃষকের নাম ও পিতা/স্বামীর নাম</th>
+        <th>গ্রাম/ব্লক</th>
+        <th>কৃষকের মোবাইল নম্বর</th>
+        <th>ব্যবহৃত জাত</th>
+        <th>রোপন/স্থাপনের তারিখ </th>
+        <th>কর্তন ফসল সংগ্রহের তারিখ</th>
+        <th>উৎপাদন টন/হেঃ</th>
+        <th>কৃষকের মন্তব্য</th>
+        <th>উপজেলা কৃষি অফিসারের মন্তব্য</th>
+        <th>জেলা পরিচালকের মন্তব্য</th>
+        <th>প্রজেক্ট পরিচালকের মন্তব্য</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% records.forEach(function(row){ %>
+            <tr>
+                <td colspan="10">No data Found</td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } %>
