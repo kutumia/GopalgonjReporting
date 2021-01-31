@@ -1,0 +1,1 @@
+# Reporting Management Software for "Gopalganj, Khulna, Bagerhat, Satkhira and Pirojpur Agricultural Development project" a project of Department of Agriculture Extension, Ministry of Agriculture Bangladesh.
