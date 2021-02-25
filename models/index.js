@@ -36,6 +36,14 @@ db.localTraining = require("./localTraining.model.js")(sequelize, Sequelize);
 db.localOfficeBuiliding = require("./localOfficeBuiliding.model.js")(sequelize, Sequelize);
 db.kormokorta = require("./kormokorta.model.js")(sequelize, Sequelize);
 db.upoKormokorta = require("./upoKormokorta.model.js")(sequelize, Sequelize);
+db.kormokortaGallery = require("./kormokortaGallery.model.js")(sequelize, Sequelize);
+db.upokormokortaGallery = require("./upokormokortaGallery.model.js")(sequelize, Sequelize);
+db.agriFairGallery = require("./agriFairGallery.model.js")(sequelize, Sequelize);
+db.fieldDayGallery = require("./fieldDayGallery.model.js")(sequelize, Sequelize);
+db.motivationGallery = require("./motivationGallery.model.js")(sequelize, Sequelize);
+db.foreignTrainingGallery = require("./foreignTrainingGallery.model.js")(sequelize, Sequelize);
+db.localTrainingGallery = require("./localTrainingGallery.model.js")(sequelize, Sequelize);
+
 
 
 module.exports = db;
