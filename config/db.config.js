@@ -1,8 +1,15 @@
+var dotenv = require('dotenv');
+dotenv.config();
+
+let dbuser = process.env.DBUSER;
+let dbpassword = process.env.DBPASSWORD;
+let db = process.env.DB;
+console.log(db,dbuser,dbpassword)
 module.exports = {
     HOST: "localhost",
-    USER: "root",
-    PASSWORD: "",
-    DB: "gopalgonj",
+    USER: dbuser,
+    PASSWORD: dbpassword,
+    DB: db,
     dialect: "mysql",
     pool: {
       max: 5,
