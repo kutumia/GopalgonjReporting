@@ -1568,7 +1568,7 @@ module.exports.upoKormokortaGallery=async(req,res)=>{
      
     //  records:result
 
-};
+}; 
 module.exports.upoKormokortaGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
