@@ -16,12 +16,127 @@ const kormokorta = db.kormokorta;
 const localOfficeBuiliding = db.localOfficeBuiliding;
 const localTraining = db.localTraining;
 const foreignTraining = db.foreignTraining;
+const kormokortaGallery = db.kormokortaGallery;
+const localTrainingGallery = db.localTrainingGallery;
+const foreignTrainingGallery = db.foreignTrainingGallery;
+const upoKormokortaGallery = db.upoKormokortaGallery;
+const agriFairGallery = db.agriFairGallery;
+const fieldDayGallery = db.fieldDayGallery;
+const motivationGallery = db.motivationGallery;
+
+const multer = require("multer");
+const path = require("path");
 
 const jwt= require('jsonwebtoken');
 const bcrypt= require('bcryptjs'); 
 
 const { request, response } = require('express');
 const express = require('express');
+
+//multer setup for kormokorta image
+var storagekormokorta = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/kormokortaGallery');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var uploadkormokorta = multer({
+    storage: storagekormokorta,
+ }).single("kormokorta");
+ exports.uploadkormokorta=uploadkormokorta;
+ //multer setup for kormokorta image ends
+
+ //multer setup for agriFair image
+var storageagriFair= multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/agriFairGallery');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var uploadagriFair = multer({
+    storage: storageagriFair,
+ }).single("agriFair");
+ exports.uploadagriFair=uploadagriFair;
+ //multer setup for agriFair image ends
+
+ //multer setup for fieldDay image
+var storagefieldDay = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/fieldDayGallery');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var uploadfieldDay = multer({
+    storage: storagefieldDay,
+ }).single("fieldDay");
+ exports.uploadfieldDay=uploadfieldDay;
+ //multer setup for fieldDay image ends
+
+ //multer setup for foreignTraining image
+var storageforeignTraining = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/foreignTrainingGallery');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var uploadforeignTraining = multer({
+    storage: storageforeignTraining,
+ }).single("foreignTraining");
+ exports.uploadforeignTraining=uploadforeignTraining;
+ //multer setup for foreignTraining image ends
+
+ //multer setup for localTraining image
+var storagelocalTraining = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/localTrainingGallery');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var uploadlocalTraining = multer({
+    storage: storagelocalTraining,
+ }).single("localTraining");
+ exports.uploadlocalTraining=uploadlocalTraining;
+ //multer setup for localTraining image ends
+
+ //multer setup for motivation image
+var storagemotivation = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/motivationGallery');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var uploadmotivation = multer({
+    storage: storagemotivation,
+ }).single("motivation");
+ exports.uploadmotivation=uploadmotivation;
+ //multer setup for motivation image ends
+
+ //multer setup for upoKormokorta image
+var storageupoKormokorta = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/upoKormokortaGallery');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var uploadupoKormokorta = multer({
+    storage: storageupoKormokorta,
+ }).single("kormokorta");
+ exports.uploadupoKormokorta=uploadupoKormokorta;
+ //multer setup for upoKormokorta image ends
 
 
 module.exports.pdlogin=async(req,res)=>{
@@ -430,6 +545,40 @@ await agriFair.update({
         res.render('errorpage',err);
     });
 };
+module.exports.agriFairGallery=async(req,res)=>{
+    await agriFairGallery.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/agriFair/agriFairGallery', { title: 'কৃষি মেলা গ্যালারী',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside",err);
+
+    })
+     
+    //  records:result
+
+};
+module.exports.agriFairGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/agriFairGallery/" + req.file.filename;
+        await agriFairGallery.create({
+                image: imagePath,
+            })
+            .then(data => {
+            res.redirect('/pd/agriFairGallery');
+            }).catch(err => {
+            console.log("file not uploaded successfully");
+            });
+        }
+        else{
+        
+            console.log("file not uploaded successfully");
+        };
+    
+  
+};
 //agriFair controller end
 
 //irrigation controller
@@ -653,6 +802,40 @@ await motivation.update({
         res.render('errorpage',err);
     });
 };
+module.exports.motivationGallery=async(req,res)=>{
+    await motivationGallery.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/motivation/motivationGallery', { title: 'উদ্বুদ্ধকরণ ভ্রমণ গ্যালারী',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside",err);
+
+    })
+     
+    //  records:result
+
+};
+module.exports.motivationGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/motivationGallery/" + req.file.filename;
+        await motivationGallery.create({
+                image: imagePath,
+            })
+            .then(data => {
+            res.redirect('/pd/motivationGallery');
+            }).catch(err => {
+            console.log("file not uploaded successfully");
+            });
+        }
+        else{
+        
+            console.log("file not uploaded successfully");
+        };
+    
+  
+};
 //motivation controller end
 
 //fieldDay controller
@@ -727,6 +910,40 @@ await fieldDay.update({
     }).catch(err => {
         res.render('errorpage',err);
     });
+};
+module.exports.fieldDayGallery=async(req,res)=>{
+    await fieldDayGallery.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/fieldDay/fieldDayGallery', { title: 'মাঠ দিবস গ্যালারী',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside",err);
+
+    })
+     
+    //  records:result
+
+};
+module.exports.fieldDayGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/fieldDayGallery/" + req.file.filename;
+        await fieldDayGallery.create({
+                image: imagePath,
+            })
+            .then(data => {
+            res.redirect('/pd/fieldDayGallery');
+            }).catch(err => {
+            console.log("file not uploaded successfully");
+            });
+        }
+        else{
+        
+            console.log("file not uploaded successfully");
+        };
+    
+  
 };
 //fieldDay controller end
 
@@ -831,6 +1048,40 @@ module.exports.foreignTrainingDelete=async(req,res)=>{
         console.log(err);
     }
 };
+module.exports.foreignTrainingGallery=async(req,res)=>{
+    await foreignTrainingGallery.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/foreignTraining/foreignTrainingGallery', { title: 'বৈদেশিক শিক্ষাসফর গ্যালারী',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside",err);
+
+    })
+     
+    //  records:result
+
+};
+module.exports.foreignTrainingGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/foreignTrainingGallery/" + req.file.filename;
+        await foreignTrainingGallery.create({
+                image: imagePath,
+            })
+            .then(data => {
+            res.redirect('/pd/foreignTrainingGallery');
+            }).catch(err => {
+            console.log("file not uploaded successfully");
+            });
+        }
+        else{
+        
+            console.log("file not uploaded successfully");
+        };
+    
+  
+};
 //foreignTraining controller end
 
 //localTraining controller
@@ -933,6 +1184,40 @@ module.exports.localTrainingDelete=async(req,res)=>{
     catch{
         console.log("outside",err);
     }
+};
+module.exports.localTrainingGallery=async(req,res)=>{
+    await localTrainingGallery.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/localTraining/localTrainingGallery', { title: 'আঞ্চলিক কর্মশালা গ্যালারী',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside",err);
+
+    })
+     
+    //  records:result
+
+};
+module.exports.localTrainingGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/localTrainingGallery/" + req.file.filename;
+        await localTrainingGallery.create({
+                image: imagePath,
+            })
+            .then(data => {
+            res.redirect('/pd/localTrainingGallery');
+            }).catch(err => {
+            console.log("file not uploaded successfully");
+            });
+        }
+        else{
+        
+            console.log("file not uploaded successfully");
+        };
+    
+  
 };
 //localTraining controller end
 
@@ -1126,6 +1411,41 @@ module.exports.kormokortaDelete=async(req,res)=>{
         console.log("outside",err);
     }
 };
+module.exports.kormokortaGallery=async(req,res)=>{
+    await kormokortaGallery.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/kormokorta/kormokortaGallery', { title: 'কর্মকর্তা প্রশিক্ষণ গ্যালারী',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside",err);
+
+    })
+     
+    //  records:result
+
+};
+module.exports.kormokortaGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    console.log("path",path)
+    if(path){
+        var imagePath = "/kormokortaGallery/" + req.file.filename;
+        await kormokortaGallery.create({
+                image: imagePath,
+            })
+            .then(data => {
+            res.redirect('/pd/kormokortaGallery');
+            }).catch(err => {
+            console.log("file not uploaded successfully");
+            });
+        }
+        else{
+        
+            console.log("file not uploaded successfully");
+        };
+    
+  
+};
 //kormokorta controller end
 
 //upoKormokorta controller
@@ -1234,5 +1554,39 @@ module.exports.upoKormokortaDelete=async(req,res)=>{
     catch{
         console.log("outside",err);
     }
+};
+module.exports.upoKormokortaGallery=async(req,res)=>{
+    await upoKormokortaGallery.findAll()
+    .then(data => {
+        console.log("inside");
+        res.render('pd/upoKormokorta/upoKormokortaGallery', { title: 'উপ সহকারী কৃষি কর্মকর্তা গ্যালারী',success:'', records: data });
+    })
+    .catch(err => {
+        console.log("outside",err);
+
+    })
+     
+    //  records:result
+
+};
+module.exports.upoKormokortaGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/upoKormokortaGallery/" + req.file.filename;
+        await upoKormokortaGallery.create({
+                image: imagePath,
+            })
+            .then(data => {
+            res.redirect('/pd/upoKormokortaGallery');
+            }).catch(err => {
+            console.log("file not uploaded successfully");
+            });
+        }
+        else{
+        
+            console.log("file not uploaded successfully");
+        };
+    
+  
 };
 //upoKormokorta controller end
