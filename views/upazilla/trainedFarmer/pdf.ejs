@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>কৃষক প্রশিক্ষণ তথ্য</title>
+
+    <style>
+        .flex-container {
+            display: flex;
+
+            justify-content: center
+        }
+        .table, td, th {
+            border: 1px solid black;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .center {
+            text-align: center;
+        }
+        .inline-block-child {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
+    <div>
+        <h1>কৃষক প্রশিক্ষণ তথ্য</h1>
+        <p><b>উপজেলার নাম :</b><%= centerName %></p>
+        <%if (records.length >0){ %>
+            <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
+            <thead>
+            <tr>
+                <th>ক্রমিক নং</th>
+                <th>প্রশিক্ষণার্থীর নাম ও পিতা/স্বামীর নাম</th>
+                <th>গ্রাম/ব্লক</th>
+                <th>মোবাইল নম্বর (যদি থাকে)</th>
+                <th>জাতীয় পরিচয়পত্র নম্বর</th>
+                <th>প্রশিক্ষণের বিষয়</th>
+                <th>প্রশিক্ষণের তারিখ</th>
+                <th>জেলা পরিচালকের মন্তব্য</th>
+                <th>প্রজেক্ট পরিচালকের মন্তব্য</th>
+                <th>পরিবর্তন/মুছুন</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% records.forEach(function(row,index) { %>
+                    <tr>
+                        <td><%= index+1 %></td>
+                        <td><%= row.name %></td>
+                        <td><%= row.vname %></td>
+                        <td><%= row.mnum %></td>
+                        <td><%= row.nid %></td>
+                        <td><%= row.topic%></td>
+                        <td><%= row.date %></td>
+                        <td><%= row.ddComment %></td>
+                        <td><%= row.pdComment %></td>
+                        <td><a class="btn btn-primary btn-xs" href="/upazilla/trainedFarmerEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-danger btn-xs" href="/upazilla/trainedFarmerDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <% }else{ %>
+            <table class="table table-bordered table-striped" id="tblCustomers" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>ক্রমিক নং</th>
+                    <th>প্রশিক্ষণার্থীর নাম ও পিতা/স্বামীর নাম</th>
+                    <th>গ্রাম/ব্লক</th>
+                    <th>মোবাইল নম্বর (যদি থাকে)</th>
+                    <th>জাতীয় পরিচয়পত্র নম্বর</th>
+                    <th>প্রশিক্ষণের বিষয়</th>
+                    <th>প্রশিক্ষণের তারিখ</th>
+                <th>জেলা পরিচালকের মন্তব্য</th>
+                <th>প্রজেক্ট পরিচালকের মন্তব্য</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% records.forEach(function(row){ %>
+                    <tr>
+                        <td colspan="10">No data Found</td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</div>
+
+</body>
+</html>
