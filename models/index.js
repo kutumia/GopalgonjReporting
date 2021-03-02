@@ -22,6 +22,7 @@ db.sequelize = sequelize;
 db.pd = require("./pd.model.js")(sequelize, Sequelize);
 db.dd = require("./dd.model.js")(sequelize, Sequelize);
 db.ad = require("./ad.model.js")(sequelize, Sequelize);
+
 db.upazilla = require("./upazilla.model.js")(sequelize, Sequelize);
 db.trainedFarmer = require("./trainedFarmer.model.js")(sequelize, Sequelize);
 db.initialTrial = require("./initialTrial.model.js")(sequelize, Sequelize);
@@ -36,14 +37,18 @@ db.localTraining = require("./localTraining.model.js")(sequelize, Sequelize);
 db.localOfficeBuiliding = require("./localOfficeBuiliding.model.js")(sequelize, Sequelize);
 db.kormokorta = require("./kormokorta.model.js")(sequelize, Sequelize);
 db.upoKormokorta = require("./upoKormokorta.model.js")(sequelize, Sequelize);
-db.kormokortaGallery = require("./kormokortaGallery.model.js")(sequelize, Sequelize);
-db.upokormokortaGallery = require("./upokormokortaGallery.model.js")(sequelize, Sequelize);
+
 db.agriFairGallery = require("./agriFairGallery.model.js")(sequelize, Sequelize);
 db.fieldDayGallery = require("./fieldDayGallery.model.js")(sequelize, Sequelize);
-db.motivationGallery = require("./motivationGallery.model.js")(sequelize, Sequelize);
+db.finalTrialGallery = require("./finalTrialGallery.model.js")(sequelize, Sequelize);
 db.foreignTrainingGallery = require("./foreignTrainingGallery.model.js")(sequelize, Sequelize);
+db.initialTrialGallery = require("./initialTrialGallery.model.js")(sequelize, Sequelize);
+db.irrigationGallery = require("./irrigationGallery.model.js")(sequelize, Sequelize);
+db.kormokortaGallery = require("./kormokortaGallery.model.js")(sequelize, Sequelize);
 db.localTrainingGallery = require("./localTrainingGallery.model.js")(sequelize, Sequelize);
-
-
+db.machineryGallery = require("./machineryGallery.model.js")(sequelize, Sequelize);
+db.motivationGallery = require("./motivationGallery.model.js")(sequelize, Sequelize);
+db.trainedFarmerGallery = require("./trainedFarmerGallery.model.js")(sequelize, Sequelize);
+db.upokormokortaGallery = require("./upokormokortaGallery.model.js")(sequelize, Sequelize);
 
 module.exports = db;

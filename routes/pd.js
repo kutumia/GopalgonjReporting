@@ -9,8 +9,14 @@ const {
     pdlogin,
     pdloginpost,
     pdDashboard,
+
+    trainedFarmer,
     trainedFarmerEditPost,
     trainedFarmerEdit,
+    trainedFarmerFilter,
+    trainedFarmerDistrictFilter,
+    trainedFarmerGallery,
+    trainedFarmerGalleryPost,
 
     uploadkormokorta,
     uploadagriFair,
@@ -19,17 +25,10 @@ const {
     uploadforeignTraining,
     uploadlocalTraining,
     uploadupoKormokorta,
-
-    trainedFarmer,
-    trainedFarmerFilter,
-    trainedFarmerDistrictFilter,
+    uploadFarmerTraining,
 
     initialTrial,
     initialTrialFilter,
-    initialTrialEdit,
-    initialTrialEditPost,
-    initialTrialDistrictFilter,
-
     irrigationEdit,
     irrigationEditPost,
     machineryEdit,
@@ -39,17 +38,19 @@ const {
     fieldDayEdit,
     fieldDayEditPost,
 
-    finalTrial,
+    initialTrialEdit,
+    initialTrialEditPost,
     finalTrialEdit,
-    finalTrialFilter,
     finalTrialEditPost,
-
     agriFairEdit,
     agriFairEditPost,
     agriFairGallery,
     agriFairGalleryPost,
 
+    finalTrial,
+    finalTrialFilter,
     finalTrialDistrictFilter,
+    initialTrialDistrictFilter,
     motivationGallery,
     motivationGalleryPost,
     fieldDayGallery,
@@ -133,7 +134,8 @@ router.post('/trainedFarmerFilter',trainedFarmerFilter);
 router.post('/trainedFarmerDistrictFilter',trainedFarmerDistrictFilter);
 router.get('/trainedFarmerEdit/:id',trainedFarmerEdit);
 router.post('/trainedFarmerEditPost/:id',trainedFarmerEditPost);
-
+router.get('/trainedFarmerGallery', trainedFarmerGallery);
+router.post('/trainedFarmerGalleryPost', uploadFarmerTraining, trainedFarmerGalleryPost)
 
 router.get('/initialTrial',initialTrial);
 router.post('/initialTrialFilter',initialTrialFilter);
