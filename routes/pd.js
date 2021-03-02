@@ -26,6 +26,8 @@ const {
     uploadlocalTraining,
     uploadupoKormokorta,
     uploadFarmerTraining,
+    uploadPrimaryPresentation,
+    uploadFinalPresentation,
 
     initialTrial,
     initialTrialFilter,
@@ -45,6 +47,9 @@ const {
 
     finalTrialEdit,
     finalTrialEditPost,
+    finalTrailGallery,
+    finalTrailGalleryPost,
+
     agriFairEdit,
     agriFairEditPost,
     agriFairGallery,
@@ -153,6 +158,8 @@ router.post('/finalTrialFilter',finalTrialFilter);
 router.post('/finalTrialDistrictFilter',finalTrialDistrictFilter);
 router.get('/finalTrialEdit/:id',finalTrialEdit);
 router.post('/finalTrialEditPost/:id',finalTrialEditPost);
+router.get('/finalTrailGallery', finalTrailGallery);
+router.post('/finalTrailGalleryPost', uploadFinalPresentation, initialTrialGalleryPost)
 
 router.get('/agriFair',agriFair);
 router.post('/agriFairFilter',agriFairFilter);
