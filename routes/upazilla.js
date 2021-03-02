@@ -25,6 +25,8 @@ router.post('/trainedFarmerFormPost',trainedFarmerFormPost);
 router.get('/trainedFarmerEdit/:id',trainedFarmerEdit);
 router.post('/trainedFarmerFormEditPost/:id',trainedFarmerFormEditPost);
 router.get('/trainedFarmerDelete/:id',trainedFarmerDelete);
+router.get('/trainedFarmerGallery', trainedFarmerGallery);
+router.post('/trainedFarmerGalleryPost', uploadFarmerTraining, trainedFarmerGalleryPost)
 
 router.get('/initialTrial',initialTrial);
 router.post('/initialTrialYear',initialTrialYear);
@@ -44,6 +46,8 @@ router.post('/agriFairFormPost',agriFairFormPost);
 router.get('/agriFairEdit/:id',agriFairEdit);
 router.post('/agriFairEditPost/:id',agriFairEditPost);
 router.get('/agriFairDelete/:id',agriFairDelete);
+router.get('/agriFairGallery',agriFairGallery);
+router.post('/agriFairGalleryPost',uploadagriFair,agriFairGalleryPost);
 
 router.get('/fieldDay',fieldDay);
 router.post('/fieldDayYear',fieldDayYear);
@@ -52,6 +56,8 @@ router.post('/fieldDayFormPost',fieldDayFormPost);
 router.get('/fieldDayEdit/:id',fieldDayEdit);
 router.post('/fieldDayEditPost/:id',fieldDayEditPost);
 router.get('/fieldDayDelete/:id',fieldDayDelete);
+router.get('/fieldDayGallery',fieldDayGallery);
+router.post('/fieldDayGalleryPost',uploadfieldDay,fieldDayGalleryPost);
 
 router.get('/irrigation',irrigation);
 router.post('/irrigationYear',irrigationYear);

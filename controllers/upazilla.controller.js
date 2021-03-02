@@ -21,6 +21,20 @@ const bcrypt= require('bcryptjs');
 const { request, response } = require('express');
 const express = require('express');
 
+// Multer setup for FarmerTraining
+var storageFarmerTraining = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/farmerTrainingGallery');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+});
+var uploadFarmerTraining = multer({
+    storage: storageFarmerTraining,
+}).single("farmerTraining");
+exports.uploadFarmerTraining=uploadFarmerTraining;
+
 
 module.exports.upazillalogin=async(req,res)=>{
     res.render('upazilla/login', { title: 'গোপালগঞ্জ,খুলনা,বাগেরহাট,সাতক্ষীরা এবং পিরোজপুর কৃষি উন্নয়ন প্রকল্প এ স্বাগতম',msg:'' });
@@ -313,7 +327,6 @@ module.exports.initialTrial=async(req,res)=>{
     //  records:result
 
 };
-
 module.exports.initialTrialYear=async(req,res)=>{
     await initialTrial.findAll({
         where: {year: req.body.year,upazilla_id: req.session.user_id}
@@ -394,7 +407,6 @@ module.exports.finalTrial=async(req,res)=>{
     //  records:result
 
 };
-
 module.exports.finalTrialYear=async(req,res)=>{
     await finalTrial.findAll({
         where: {year: req.body.year,upazilla_id: req.session.user_id}
@@ -409,11 +421,9 @@ module.exports.finalTrialYear=async(req,res)=>{
     })
 
 };
-
 module.exports.finalTrialForm=async(req,res)=>{
     res.render('upazilla/finalTrial/finalTrialForm', { title: 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন',msg:'' ,success:'',user_id: req.session.user_id});
 };
-
 module.exports.finalTrialFormPost=async(req,res)=>{
     var cdate= req.body.cdate;
     var production= req.body.production;
@@ -448,8 +458,6 @@ module.exports.finalTrialEdit=async(req,res)=>{
 
     })
 };
-
-
 //finalTrial controller end
 
 //agriFair controller
