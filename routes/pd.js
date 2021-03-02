@@ -29,6 +29,7 @@ const {
     uploadPrimaryPresentation,
     uploadFinalPresentation,
     uploadIrrigation,
+    uploadAgriTools,
 
     initialTrial,
     initialTrialFilter,
@@ -44,6 +45,9 @@ const {
 
     machineryEdit,
     machineryEditPost,
+    machineryGallery,
+    machineryGalleryPost,
+
     motivationEdit,
     motivationEditPost,
     fieldDayEdit,
@@ -187,6 +191,8 @@ router.post('/machineryFilter',machineryFilter);
 router.post('/machineryDistrictFilter',machineryDistrictFilter);
 router.get('/machineryEdit/:id',machineryEdit);
 router.post('/machineryEditPost/:id',machineryEditPost);
+router.get('/machineryGallery', machineryGallery);
+router.post('/machineryGalleryPost',uploadAgriTools,machineryGalleryPost);
 
 
 router.get('/motivation',motivation);
