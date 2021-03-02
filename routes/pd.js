@@ -26,22 +26,38 @@ const {
     uploadlocalTraining,
     uploadupoKormokorta,
     uploadFarmerTraining,
+    uploadPrimaryPresentation,
+    uploadFinalPresentation,
+    uploadIrrigation,
+    uploadAgriTools,
 
     initialTrial,
     initialTrialFilter,
+    initialTrialGallery,
+    initialTrialGalleryPost,
+    initialTrialEdit,
+    initialTrialEditPost,
+
     irrigationEdit,
     irrigationEditPost,
+    irrigationGallery,
+    irrigationGalleryPost,
+
     machineryEdit,
     machineryEditPost,
+    machineryGallery,
+    machineryGalleryPost,
+
     motivationEdit,
     motivationEditPost,
     fieldDayEdit,
     fieldDayEditPost,
 
-    initialTrialEdit,
-    initialTrialEditPost,
     finalTrialEdit,
     finalTrialEditPost,
+    finalTrailGallery,
+    finalTrailGalleryPost,
+
     agriFairEdit,
     agriFairEditPost,
     agriFairGallery,
@@ -142,12 +158,16 @@ router.post('/initialTrialFilter',initialTrialFilter);
 router.post('/initialTrialDistrictFilter',initialTrialDistrictFilter);
 router.get('/initialTrialEdit/:id',initialTrialEdit);
 router.post('/initialTrialEditPost/:id',initialTrialEditPost);
+router.get('/initialTrialGallery', initialTrialGallery);
+router.post('/initialTrialGalleryPost', uploadPrimaryPresentation, initialTrialGalleryPost)
 
 router.get('/finalTrial',finalTrial);
 router.post('/finalTrialFilter',finalTrialFilter);
 router.post('/finalTrialDistrictFilter',finalTrialDistrictFilter);
 router.get('/finalTrialEdit/:id',finalTrialEdit);
 router.post('/finalTrialEditPost/:id',finalTrialEditPost);
+router.get('/finalTrailGallery', finalTrailGallery);
+router.post('/finalTrailGalleryPost', uploadFinalPresentation, finalTrailGalleryPost)
 
 router.get('/agriFair',agriFair);
 router.post('/agriFairFilter',agriFairFilter);
@@ -162,12 +182,17 @@ router.post('/irrigationFilter',irrigationFilter);
 router.post('/irrigationDistrictFilter',irrigationDistrictFilter);
 router.get('/irrigationEdit/:id',irrigationEdit);
 router.post('/irrigationEditPost/:id',irrigationEditPost);
+router.get('/irrigationGallery', irrigationGallery);
+router.post('/irrigationGalleryPost',uploadIrrigation,irrigationGalleryPost);
+
 
 router.get('/machinery',machinery);
 router.post('/machineryFilter',machineryFilter);
 router.post('/machineryDistrictFilter',machineryDistrictFilter);
 router.get('/machineryEdit/:id',machineryEdit);
 router.post('/machineryEditPost/:id',machineryEditPost);
+router.get('/machineryGallery', machineryGallery);
+router.post('/machineryGalleryPost',uploadAgriTools,machineryGalleryPost);
 
 
 router.get('/motivation',motivation);

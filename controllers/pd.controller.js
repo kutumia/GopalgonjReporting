@@ -24,6 +24,10 @@ const agriFairGallery = db.agriFairGallery;
 const fieldDayGallery = db.fieldDayGallery;
 const motivationGallery = db.motivationGallery;
 const trainedFarmerGallery = db.trainedFarmerGallery;
+const initialTrailGallery = db.initialTrailGallery;
+const finalTrailGallery = db.finalTrailGallery;
+const machineryGallery = db.machineryGallery;
+const irrigationGallery = db.irrigationGallery;
 
 const multer = require("multer");
 const path = require("path");
@@ -318,7 +322,7 @@ module.exports.pdsignuppost=async(req,res)=>{
 };
 //signUp controller end
 
-//trainedFarmer controller --------------------------------------------------------------------------------------------------------
+//trainedFarmer controller -
 module.exports.trainedFarmer=async(req,res)=>{
     try{
         var districts=await dd.findAll();
@@ -486,6 +490,36 @@ await initialTrial.update({
         res.render('errorpage',err);
     });
 };
+module.exports.initialTrialGallery=async(req,res)=>{
+    try{
+        var districts = await dd.findAll();
+        const data = await initialTrailGallery.findAll();
+        res.render('pd/initialTrial/initialTrailGallery', { title: 'প্রদর্শনীর প্রাথমিক প্রতিবেদন গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
+};
+module.exports.initialTrialGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/primaryPresentationGallery/" + req.file.filename;
+        await initialTrailGallery.create({
+            image: imagePath,
+            dd_id: req.body.district,
+            upazilla_id: req.body.upazilla
+        })
+        .then(data => {
+            res.redirect('/pd/initialTrialGallery');
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    };
+};
+
 //initialTrial controller end
 
 //finalTrial controller ----------------------------------------------------------------------------------------------------------------------------
@@ -501,7 +535,6 @@ module.exports.finalTrial=async(req,res)=>{
     //  records:result
 
 };
-
 module.exports.finalTrialFilter=async(req,res)=>{
     await finalTrial.findAll({
         where: {year: req.body.year,upazilla_id: req.body.upazilla}
@@ -541,7 +574,6 @@ module.exports.finalTrialEdit=async(req,res)=>{
 //  records:result
 
 };
-
 module.exports.finalTrialEditPost=async(req,res)=>{
 var pdComment= req.body.pdComment;
 console.log("req.params.id",req.params.id);
@@ -557,6 +589,35 @@ await finalTrial.update({
     }).catch(err => {
         res.render('errorpage',err);
     });
+};
+module.exports.finalTrailGallery=async(req,res)=>{
+    try{
+        var districts = await dd.findAll();
+        const data = await finalTrailGallery.findAll();
+        res.render('pd/finalTrial/finalTrailGallery', { title: 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন গ্গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
+};
+module.exports.finalTrailGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/finalPresentationGallery/" + req.file.filename;
+        await finalTrailGallery.create({
+            image: imagePath,
+            dd_id: req.body.district,
+            upazilla_id: req.body.upazilla
+        })
+        .then(data => {
+            res.redirect('/pd/finalTrailGallery');
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    };
 };
 //finalTrial controller end
 
@@ -587,7 +648,6 @@ module.exports.agriFairFilter=async(req,res)=>{
         res.render('errorpage',err);    })
 
 };
-
 module.exports.agriFairDistrictFilter=async(req,res)=>{
     try{
         // var dds=await dd.findAll({where: {id: req.body.district}});
@@ -614,7 +674,6 @@ module.exports.agriFairEdit=async(req,res)=>{
 //  records:result
 
 };
-
 module.exports.agriFairEditPost=async(req,res)=>{
 var pdComment= req.body.pdComment;
 console.log("req.params.id",req.params.id);
@@ -662,7 +721,7 @@ module.exports.agriFairGalleryPost=async(req,res)=>{
 };
 //agriFair controller end
 
-//irrigation controller
+//irrigation controller -------------------------------------------------------------------------------------------------------------------------------------------
 module.exports.irrigation=async(req,res)=>{
     try{
         var districts=await dd.findAll();
@@ -676,7 +735,6 @@ module.exports.irrigation=async(req,res)=>{
     //  records:result
 
 };
-
 module.exports.irrigationFilter=async(req,res)=>{
     await irrigation.findAll({ 
         where: {year: req.body.year,upazilla_id: req.body.upazilla}
@@ -690,7 +748,6 @@ module.exports.irrigationFilter=async(req,res)=>{
         res.render('errorpage',err);    })
 
 };
-
 module.exports.irrigationDistrictFilter=async(req,res)=>{
     try{
         // var dds=await dd.findAll({where: {id: req.body.district}});
@@ -717,7 +774,6 @@ module.exports.irrigationEdit=async(req,res)=>{
 //  records:result
 
 };
-
 module.exports.irrigationEditPost=async(req,res)=>{
 var pdComment= req.body.pdComment;
 console.log("req.params.id",req.params.id);
@@ -734,9 +790,38 @@ await irrigation.update({
         res.render('errorpage',err);
     });
 };
+module.exports.irrigationGallery=async(req,res)=>{
+    try{
+        var districts = await dd.findAll();
+        const data = await irrigationGallery.findAll();
+        res.render('pd/irrigation/irrigationGallery', { title: 'সেচ অবকাঠামো নির্মাণ তথ্য গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
+};
+module.exports.irrigationGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/irrigationGallery/" + req.file.filename;
+        await irrigationGallery.create({
+            image: imagePath,
+            dd_id: req.body.district,
+            upazilla_id: req.body.upazilla
+        })
+        .then(data => {
+            res.redirect('/pd/irrigationGallery');
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    };
+};
 //irrigation controller end
 
-//machinery controller
+//machinery controller --------------------------------------------------------------------------------------------------------------
 module.exports.machinery=async(req,res)=>{
     try{
         var districts=await dd.findAll();
@@ -750,7 +835,6 @@ module.exports.machinery=async(req,res)=>{
     //  records:result
 
 };
-
 module.exports.machineryFilter=async(req,res)=>{
     await machinery.findAll({ 
         where: {year: req.body.year,upazilla_id: req.body.upazilla}
@@ -765,7 +849,6 @@ module.exports.machineryFilter=async(req,res)=>{
     })
 
 };
-
 module.exports.machineryDistrictFilter=async(req,res)=>{
     try{
         // var dds=await dd.findAll({where: {id: req.body.district}});
@@ -792,7 +875,6 @@ module.exports.machineryEdit=async(req,res)=>{
 //  records:result
 
 };
-
 module.exports.machineryEditPost=async(req,res)=>{
 var pdComment= req.body.pdComment;
 console.log("req.params.id",req.params.id);
@@ -808,6 +890,35 @@ await machinery.update({
     }).catch(err => {
         res.render('errorpage',err);
     });
+};
+module.exports.machineryGallery=async(req,res)=>{
+    try{
+        var districts = await dd.findAll();
+        const data = await machineryGallery.findAll();
+        res.render('pd/machinery/machineryGallery', { title: 'কৃষি যন্ত্রপাতি বিতরণ প্রতিবেদন তথ্য গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
+};
+module.exports.machineryGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/agriToolsGallery/" + req.file.filename;
+        await machineryGallery.create({
+            image: imagePath,
+            dd_id: req.body.district,
+            upazilla_id: req.body.upazilla
+        })
+        .then(data => {
+            res.redirect('/pd/machineryGallery');
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    };
 };
 //machinery controller end
 
