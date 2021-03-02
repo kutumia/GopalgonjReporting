@@ -29,6 +29,11 @@ const {
 
     initialTrial,
     initialTrialFilter,
+    initialTrialGallery,
+    initialTrialGalleryPost,
+    initialTrialEdit,
+    initialTrialEditPost,
+
     irrigationEdit,
     irrigationEditPost,
     machineryEdit,
@@ -38,8 +43,6 @@ const {
     fieldDayEdit,
     fieldDayEditPost,
 
-    initialTrialEdit,
-    initialTrialEditPost,
     finalTrialEdit,
     finalTrialEditPost,
     agriFairEdit,
@@ -142,6 +145,8 @@ router.post('/initialTrialFilter',initialTrialFilter);
 router.post('/initialTrialDistrictFilter',initialTrialDistrictFilter);
 router.get('/initialTrialEdit/:id',initialTrialEdit);
 router.post('/initialTrialEditPost/:id',initialTrialEditPost);
+router.get('/initialTrialGallery', initialTrialGallery);
+router.post('/initialTrialGalleryPost', uploadPrimaryPresentation, initialTrialGalleryPost)
 
 router.get('/finalTrial',finalTrial);
 router.post('/finalTrialFilter',finalTrialFilter);
