@@ -491,7 +491,7 @@ module.exports.trainedFarmerGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await trainedFarmerGallery.findAll();
-        res.render('pd/', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/trainedFarmer/trainedFarmerGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -507,7 +507,7 @@ module.exports.trainedFarmerGalleryPost=async(req,res)=>{
             upazilla_id: req.body.upazilla
         })
         .then(data => {
-            res.redirect('/pd/');
+            res.redirect('/upazilla/trainedFarmerGallery');
         }).catch(err => {
             console.log("file not uploaded successfully",err);
         });
@@ -611,7 +611,7 @@ module.exports.initialTrialGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await initialTrailGallery.findAll();
-        res.render('pd/', { title: 'প্রদর্শনীর প্রাথমিক প্রতিবেদন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/initialTrial/initialTrailGallery', { title: 'প্রদর্শনীর প্রাথমিক প্রতিবেদন গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -627,7 +627,7 @@ module.exports.initialTrialGalleryPost=async(req,res)=>{
             upazilla_id: req.body.upazilla
         })
         .then(data => {
-            res.redirect('/pd/');
+            res.redirect('/upazilla/initialTrialGallery');
         }).catch(err => {
             console.log("file not uploaded successfully",err);
         });
@@ -730,7 +730,7 @@ module.exports.finalTrailGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await finalTrailGallery.findAll();
-        res.render('pd/', { title: 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন গ্গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/finalTrial/finalTrailGallery', { title: 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন গ্গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -746,7 +746,7 @@ module.exports.finalTrailGalleryPost=async(req,res)=>{
             upazilla_id: req.body.upazilla
         })
         .then(data => {
-            res.redirect('/pd/');
+            res.redirect('/upazilla/finalTrailGallery');
         }).catch(err => {
             console.log("file not uploaded successfully",err);
         });
@@ -907,7 +907,7 @@ module.exports.agriFairGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await agriFairGallery.findAll();
-        res.render('pd/', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/agriFair/agriFairGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -923,7 +923,7 @@ module.exports.agriFairGalleryPost=async(req,res)=>{
                 upazilla_id: req.body.upazilla
         })
         .then(data => {
-            res.redirect('/pd/');
+            res.redirect('/upazilla/agriFairGallery');
         }).catch(err => {
             console.log("file not uploaded successfully",err);
         });
@@ -1064,7 +1064,7 @@ module.exports.fieldDayGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await fieldDayGallery.findAll();
-        res.render('pd/', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/fieldDay/fieldDayGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -1080,7 +1080,7 @@ module.exports.fieldDayGalleryPost=async(req,res)=>{
                 upazilla_id: req.body.upazilla
             })
             .then(data => {
-                res.redirect('/pd/');
+                res.redirect('/upazilla/fieldDayGallery');
             }).catch(err => {
                 console.log("file not uploaded successfully",err);
             });
@@ -1237,7 +1237,7 @@ module.exports.irrigationGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await irrigationGallery.findAll();
-        res.render('pd/', { title: 'সেচ অবকাঠামো নির্মাণ তথ্য গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/irrigation/irrigationGallery', { title: 'সেচ অবকাঠামো নির্মাণ তথ্য গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -1253,7 +1253,7 @@ module.exports.irrigationGalleryPost=async(req,res)=>{
             upazilla_id: req.body.upazilla
         })
         .then(data => {
-            res.redirect('/pd/');
+            res.redirect('/upazilla/irrigationGallery');
         }).catch(err => {
             console.log("file not uploaded successfully",err);
         });
@@ -1415,7 +1415,7 @@ module.exports.machineryGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await machineryGallery.findAll();
-        res.render('pd/', { title: 'কৃষি যন্ত্রপাতি বিতরণ প্রতিবেদন তথ্য গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/machinery/machineryGallery', { title: 'কৃষি যন্ত্রপাতি বিতরণ প্রতিবেদন তথ্য গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -1431,7 +1431,7 @@ module.exports.machineryGalleryPost=async(req,res)=>{
             upazilla_id: req.body.upazilla
         })
         .then(data => {
-            res.redirect('/pd/');
+            res.redirect('/upazilla/machineryGallery');
         }).catch(err => {
             console.log("file not uploaded successfully",err);
         });
@@ -1589,7 +1589,7 @@ module.exports.motivationGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await motivationGallery.findAll();
-        res.render('pd/', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/motivation/motivationGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -1605,7 +1605,7 @@ module.exports.motivationGalleryPost=async(req,res)=>{
                 upazilla_id: req.body.upazilla
             })
             .then(data => {
-                res.redirect('/pd/');
+                res.redirect('/upazilla/motivationGallery');
             }).catch(err => {
                 console.log("file not uploaded successfully",err);
             });
