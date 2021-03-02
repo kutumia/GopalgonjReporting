@@ -322,7 +322,7 @@ module.exports.pdsignuppost=async(req,res)=>{
 };
 //signUp controller end
 
-//trainedFarmer controller --------------------------------------------------------------------------------------------------------
+//trainedFarmer controller -
 module.exports.trainedFarmer=async(req,res)=>{
     try{
         var districts=await dd.findAll();
@@ -500,6 +500,26 @@ module.exports.initialTrialGallery=async(req,res)=>{
         console.log(e)
     }
 };
+module.exports.initialTrialGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/finalPresentationGallery/" + req.file.filename;
+        await initialTrailGallery.create({
+            image: imagePath,
+            dd_id: req.body.district,
+            upazilla_id: req.body.upazilla
+        })
+        .then(data => {
+            res.redirect('/pd/initialTrialGallery');
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    };
+};
+
 //initialTrial controller end
 
 //finalTrial controller ----------------------------------------------------------------------------------------------------------------------------
@@ -682,7 +702,7 @@ module.exports.agriFairGalleryPost=async(req,res)=>{
 };
 //agriFair controller end
 
-//irrigation controller ----------------------------------------------------------------------------------------
+//irrigation controller -------------------------------------------------------------------------------------------------------------------------------------------
 module.exports.irrigation=async(req,res)=>{
     try{
         var districts=await dd.findAll();
@@ -763,7 +783,7 @@ module.exports.irrigationGallery=async(req,res)=>{
 };
 //irrigation controller end
 
-//machinery controller
+//machinery controller --------------------------------------------------------------------------------------------------------------
 module.exports.machinery=async(req,res)=>{
     try{
         var districts=await dd.findAll();
