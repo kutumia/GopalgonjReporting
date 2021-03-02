@@ -9,7 +9,24 @@ const {fieldDayYear,agriFair,agriFairYear,agriFairForm,agriFairFormPost,fieldDay
     trainedFarmerEdit,trainedFarmerDelete,initialTrialEdit,trainedFarmerFormEditPost,finalTrialEdit,agriFairEditPost,
     fieldDay,fieldDayEdit,fieldDayDelete,irrigation,irrigationYear,irrigationForm,irrigationFormPost,irrigationEdit,irrigationDelete,
 machinery,machineryYear,machineryForm,machineryFormPost,machineryEdit,machineryDelete,irrigationEditPost,motivationEditPost,
-motivation,motivationYear,motivationForm,motivationFormPost,motivationEdit,motivationDelete} = require('../controllers/upazilla.controller');
+motivation,motivationYear,motivationForm,motivationFormPost,motivationEdit,motivationDelete,
+    trainedFarmerGallery,
+    trainedFarmerGalleryPost,
+    initialTrialGallery,
+    initialTrialGalleryPost,
+    finalTrailGallery,
+    finalTrailGalleryPost,
+    agriFairGallery,
+    agriFairGalleryPost,
+    fieldDayGallery,
+    fieldDayGalleryPost,
+    irrigationGallery,
+    irrigationGalleryPost,
+    machineryGallery,
+    machineryGalleryPost,
+    motivationGallery,
+    motivationGalleryPost
+} = require('../controllers/upazilla.controller');
 
 router.get('/login',upazillalogin);
 router.post('/logins',upazillaloginpost);
@@ -32,12 +49,16 @@ router.get('/initialTrial',initialTrial);
 router.post('/initialTrialYear',initialTrialYear);
 router.post('/initialTrialFormPost/:id',initialTrialFormPost);
 router.get('/initialTrialEdit/:id',initialTrialEdit);
+router.get('/initialTrialGallery', initialTrialGallery);
+router.post('/initialTrialGalleryPost', uploadPrimaryPresentation, initialTrialGalleryPost)
 
 router.get('/finalTrial',finalTrial);
 router.post('/finalTrialYear',finalTrialYear);
 router.get('/finalTrialForm',finalTrialForm);
 router.post('/finalTrialFormPost/:id',finalTrialFormPost);
 router.get('/finalTrialEdit/:id',finalTrialEdit);
+router.get('/finalTrailGallery', finalTrailGallery);
+router.post('/finalTrailGalleryPost', uploadFinalPresentation, finalTrailGalleryPost)
 
 router.get('/agriFair',agriFair);
 router.post('/agriFairYear',agriFairYear);
@@ -66,6 +87,8 @@ router.post('/irrigationFormPost',irrigationFormPost);
 router.get('/irrigationEdit/:id',irrigationEdit);
 router.post('/irrigationEditPost/:id',irrigationEditPost);
 router.get('/irrigationDelete/:id',irrigationDelete);
+router.get('/irrigationGallery', irrigationGallery);
+router.post('/irrigationGalleryPost',uploadIrrigation,irrigationGalleryPost);
 
 router.get('/machinery',machinery);
 router.post('/machineryYear',machineryYear);
@@ -74,6 +97,8 @@ router.post('/machineryFormPost',machineryFormPost);
 router.get('/machineryEdit/:id',machineryEdit);
 router.post('/machineryEditPost/:id',machineryEditPost);
 router.get('/machineryDelete/:id',machineryDelete);
+router.get('/machineryGallery', machineryGallery);
+router.post('/machineryGalleryPost',uploadAgriTools,machineryGalleryPost);
 
 router.get('/motivation',motivation);
 router.post('/motivationYear',motivationYear);
@@ -82,5 +107,7 @@ router.post('/motivationFormPost',motivationFormPost);
 router.get('/motivationEdit/:id',motivationEdit);
 router.post('/motivationEditPost/:id',motivationEditPost);
 router.get('/motivationDelete/:id',motivationDelete);
+router.get('/motivationGallery',motivationGallery);
+router.post('/motivationGalleryPost',uploadmotivation,motivationGalleryPost);
 
 module.exports = router;
