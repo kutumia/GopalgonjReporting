@@ -417,7 +417,7 @@ module.exports.trainedFarmerGalleryPost=async(req,res)=>{
     }
     else{
         console.log("file not uploaded successfully");
-    };
+    }
 };
 //trainedFarmer controller end
 
@@ -691,13 +691,14 @@ await agriFair.update({
     });
 };
 module.exports.agriFairGallery=async(req,res)=>{
-    await agriFairGallery.findAll()
-    .then(data => {
-        res.render('pd/agriFair/agriFairGallery', { title: 'কৃষি মেলা গ্যালারী',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside",err);
-    })     
+    try{
+        var districts = await dd.findAll();
+        const data = await agriFairGallery.findAll();
+        res.render('pd/agriFair/agriFairGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
 };
 module.exports.agriFairGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
@@ -705,19 +706,18 @@ module.exports.agriFairGalleryPost=async(req,res)=>{
         var imagePath = "/agriFairGallery/" + req.file.filename;
         await agriFairGallery.create({
                 image: imagePath,
-            })
-            .then(data => {
+                dd_id: req.body.district,
+                upazilla_id: req.body.upazilla
+        })
+        .then(data => {
             res.redirect('/pd/agriFairGallery');
-            }).catch(err => {
-            console.log("file not uploaded successfully");
-            });
-        }
-        else{
-        
-            console.log("file not uploaded successfully");
-        };
-    
-  
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    }
 };
 //agriFair controller end
 
@@ -995,18 +995,14 @@ await motivation.update({
     });
 };
 module.exports.motivationGallery=async(req,res)=>{
-    await motivationGallery.findAll()
-    .then(data => {
-        console.log("inside");
-        res.render('pd/motivation/motivationGallery', { title: 'উদ্বুদ্ধকরণ ভ্রমণ গ্যালারী',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside",err);
-
-    })
-     
-    //  records:result
-
+    try{
+        var districts = await dd.findAll();
+        const data = await motivationGallery.findAll();
+        res.render('pd/motivation/motivationGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
 };
 module.exports.motivationGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
@@ -1014,19 +1010,18 @@ module.exports.motivationGalleryPost=async(req,res)=>{
         var imagePath = "/motivationGallery/" + req.file.filename;
         await motivationGallery.create({
                 image: imagePath,
+                dd_id: req.body.district,
+                upazilla_id: req.body.upazilla
             })
             .then(data => {
-            res.redirect('/pd/motivationGallery');
+                res.redirect('/pd/motivationGallery');
             }).catch(err => {
-            console.log("file not uploaded successfully");
+                console.log("file not uploaded successfully",err);
             });
-        }
-        else{
-        
-            console.log("file not uploaded successfully");
-        };
-    
-  
+    }
+    else{
+        console.log("file not uploaded successfully");
+    }
 };
 //motivation controller end
 
@@ -1101,18 +1096,14 @@ await fieldDay.update({
     });
 };
 module.exports.fieldDayGallery=async(req,res)=>{
-    await fieldDayGallery.findAll()
-    .then(data => {
-        console.log("inside");
-        res.render('pd/fieldDay/fieldDayGallery', { title: 'মাঠ দিবস গ্যালারী',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside",err);
-
-    })
-     
-    //  records:result
-
+    try{
+        var districts = await dd.findAll();
+        const data = await fieldDayGallery.findAll();
+        res.render('pd/fieldDay/fieldDayGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
 };
 module.exports.fieldDayGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
@@ -1120,19 +1111,18 @@ module.exports.fieldDayGalleryPost=async(req,res)=>{
         var imagePath = "/fieldDayGallery/" + req.file.filename;
         await fieldDayGallery.create({
                 image: imagePath,
+                dd_id: req.body.district,
+                upazilla_id: req.body.upazilla
             })
             .then(data => {
-            res.redirect('/pd/fieldDayGallery');
+                res.redirect('/pd/fieldDayGallery');
             }).catch(err => {
-            console.log("file not uploaded successfully");
+                console.log("file not uploaded successfully",err);
             });
         }
         else{
-        
             console.log("file not uploaded successfully");
-        };
-    
-  
+        }
 };
 //fieldDay controller end
 
