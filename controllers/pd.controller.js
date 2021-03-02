@@ -503,7 +503,7 @@ module.exports.initialTrialGallery=async(req,res)=>{
 module.exports.initialTrialGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
-        var imagePath = "/finalPresentationGallery/" + req.file.filename;
+        var imagePath = "/primaryPresentationGallery/" + req.file.filename;
         await initialTrailGallery.create({
             image: imagePath,
             dd_id: req.body.district,
@@ -599,6 +599,25 @@ module.exports.finalTrailGallery=async(req,res)=>{
     catch (e) {
         console.log(e)
     }
+};
+module.exports.finalTrailGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/finalPresentationGallery/" + req.file.filename;
+        await finalTrailGallery.create({
+            image: imagePath,
+            dd_id: req.body.district,
+            upazilla_id: req.body.upazilla
+        })
+        .then(data => {
+            res.redirect('/pd/finalTrailGallery');
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    };
 };
 //finalTrial controller end
 
