@@ -800,6 +800,25 @@ module.exports.irrigationGallery=async(req,res)=>{
         console.log(e)
     }
 };
+module.exports.irrigationGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/irrigationGallery/" + req.file.filename;
+        await irrigationGallery.create({
+            image: imagePath,
+            dd_id: req.body.district,
+            upazilla_id: req.body.upazilla
+        })
+        .then(data => {
+            res.redirect('/pd/irrigationGallery');
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    };
+};
 //irrigation controller end
 
 //machinery controller --------------------------------------------------------------------------------------------------------------
