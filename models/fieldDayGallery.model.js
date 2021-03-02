@@ -7,6 +7,12 @@ module.exports = (sequelize, Sequelize) => {
       },
       image : {
         type: Sequelize.STRING
+      },
+      dd_id : {
+        type: Sequelize.STRING
+      },
+      upazilla_id : {
+        type: Sequelize.STRING
       }
       
     });
