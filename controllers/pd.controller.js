@@ -23,6 +23,7 @@ const upoKormokortaGallery = db.upoKormokortaGallery;
 const agriFairGallery = db.agriFairGallery;
 const fieldDayGallery = db.fieldDayGallery;
 const motivationGallery = db.motivationGallery;
+const trainedFarmerGallery = db.trainedFarmerGallery;
 
 const multer = require("multer");
 const path = require("path");
@@ -321,7 +322,6 @@ module.exports.pdsignuppost=async(req,res)=>{
 module.exports.trainedFarmer=async(req,res)=>{
     try{
         var districts=await dd.findAll();
-        console.log("inside");
         res.render('pd/trainedFarmer/trainedFarmer', { title: 'প্রশিক্ষণপ্রাপ্ত কৃষকের তথ্য',success:'',district:districts });
     }
     catch(err){
@@ -387,30 +387,33 @@ module.exports.trainedFarmerEditPost=async(req,res)=>{
         });
 };
 module.exports.trainedFarmerGallery=async(req,res)=>{
-    await trainedFarmer.findAll()
-    .then(data => {
-        res.render('pd/trainedFarmer/trainedFarmerGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside",err);
-    });     
+    try{
+        var districts = await dd.findAll();
+        const data = await trainedFarmerGallery.findAll();
+        res.render('pd/trainedFarmer/trainedFarmerGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
 };
 module.exports.trainedFarmerGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
         var imagePath = "/farmerTrainingGallery/" + req.file.filename;
-        await trainedFarmer.create({
-                image: imagePath,
-            })
-            .then(data => {
+        await trainedFarmerGallery.create({
+            image: imagePath,
+            dd_id: req.body.district,
+            upazilla_id: req.body.upazilla
+        })
+        .then(data => {
             res.redirect('/pd/trainedFarmerGallery');
-            }).catch(err => {
-            console.log("file not uploaded successfully");
-            });
-        }
-        else{        
-            console.log("file not uploaded successfully");
-        };      
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    };
 };
 //trainedFarmer controller end
 
