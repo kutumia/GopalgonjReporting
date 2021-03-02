@@ -28,6 +28,7 @@ const {
     uploadFarmerTraining,
     uploadPrimaryPresentation,
     uploadFinalPresentation,
+    uploadIrrigation,
 
     initialTrial,
     initialTrialFilter,
@@ -38,6 +39,9 @@ const {
 
     irrigationEdit,
     irrigationEditPost,
+    irrigationGallery,
+    irrigationGalleryPost,
+
     machineryEdit,
     machineryEditPost,
     motivationEdit,
@@ -159,7 +163,7 @@ router.post('/finalTrialDistrictFilter',finalTrialDistrictFilter);
 router.get('/finalTrialEdit/:id',finalTrialEdit);
 router.post('/finalTrialEditPost/:id',finalTrialEditPost);
 router.get('/finalTrailGallery', finalTrailGallery);
-router.post('/finalTrailGalleryPost', uploadFinalPresentation, initialTrialGalleryPost)
+router.post('/finalTrailGalleryPost', uploadFinalPresentation, finalTrailGalleryPost)
 
 router.get('/agriFair',agriFair);
 router.post('/agriFairFilter',agriFairFilter);
@@ -174,6 +178,9 @@ router.post('/irrigationFilter',irrigationFilter);
 router.post('/irrigationDistrictFilter',irrigationDistrictFilter);
 router.get('/irrigationEdit/:id',irrigationEdit);
 router.post('/irrigationEditPost/:id',irrigationEditPost);
+router.get('/irrigationGallery', irrigationGallery);
+router.post('/irrigationGalleryPost',uploadIrrigation,irrigationGalleryPost);
+
 
 router.get('/machinery',machinery);
 router.post('/machineryFilter',machineryFilter);
