@@ -16,32 +16,13 @@
                         </div>
 
                         <div class="container gallery-container">
-                            <form action="/pd/motivationGalleryPost" id="FieldTrialForm" class="form-horizontal" method="post"  role="form" enctype="multipart/form-data">
+                            <form action="/upazilla/motivationGalleryPost" id="FieldTrialForm" class="form-horizontal" method="post"  role="form" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="form-group col-md-4">
                                         <label >নতুন ছবি আপ্লোড করুন</label>
                                         <input type="file" id="filename" class="form-control" name="motivation" required>
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="district">বাছুন:</label>
-                                        <select id="district" name="district" class="form-control">
-                                            <option value="">জেলা বাছুন:</option>
-                                            <%if (district.length >0){ %>
-                                                <% district.forEach(function(row){ %>
-                                                    <option value="<%= row.id %>"><%= row.district %></option>
-                                                <% }) %>
-                                            <% } %>
 
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <div class="form-group">
-                                            <label for="district">উপজেলা :</label>
-                                            <select name="upazilla" id="upazilla" class="form-control">
-                                                <option value="0" disabled="true" selected="true">উপজেলা বাছুন</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="form-group col-md-4">
                                         <label for="district"></label>
                                         <input type="submit" name="submit" value="আপ্লোড" class="btn btn-primary">

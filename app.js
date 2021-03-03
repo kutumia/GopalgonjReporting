@@ -13,15 +13,17 @@ var upazillaRouter = require('./routes/upazilla');
 var pdRouter = require('./routes/pd');
 // var adRouter = require('./routes/ad');
 var ddRouter = require('./routes/dd');
+const redis = require("redis");
 
-
+let RedisStore = require("connect-redis")(session);
+let redisClient = redis.createClient();
 dotenv.config({path:'./.env'});
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true,  cookie: { maxAge: Date.now() + (30 * 86400 * 1000*10000)  }}))
+app.use(session({ store: new RedisStore({ client: redisClient }),secret: 'keyboard cat', resave: true, saveUninitialized: true,  cookie: { maxAge: Date.now() + (30 * 86400 * 1000*10000)  }}))
 // app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -31,7 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   res.locals.type = req.session.type;
-  console.log("app.js",req.session.type,res.locals.type)
   res.locals.user_id = req.session.user_id;
   next();
 });

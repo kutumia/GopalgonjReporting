@@ -1,3 +1,10 @@
 node_modules
 .env
-
+public/agriFairGallery
+public/farmerTrainingGallery
+public/fieldDayGallery
+public/foreignTrainingGallery
+public/kormokortaGallery
+public/localTrainingGallery
+public/motivationGallery
+public/upoKormokortaGallery
