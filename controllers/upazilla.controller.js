@@ -13,8 +13,8 @@ const fieldDay = db.fieldDay;
 const agriFair = db.agriFair;
 
 const trainedFarmerGallery = db.trainedFarmerGallery;
-const initialTrailGallery = db.initialTrailGallery;
-const finalTrailGallery = db.finalTrailGallery;
+const initialTrialGallery = db.initialTrialGallery
+const finalTrialGallery = db.finalTrialGallery;
 const agriFairGallery = db.agriFairGallery;
 const fieldDayGallery = db.fieldDayGallery;
 const irrigationGallery = db.irrigationGallery;
@@ -499,7 +499,7 @@ module.exports.trainedFarmerDelete = async (req, res) => {
 module.exports.trainedFarmerGallery=async(req,res)=>{
     try{
         console.log("upazilla",req.session.user_id);
-        var districts = await dd.findAll();
+        var districts = await dd.findAll();        
         const data = await trainedFarmerGallery.findAll();
         res.render('upazilla/trainedFarmer/trainedFarmerGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
     }
@@ -622,8 +622,8 @@ module.exports.initialTrialEdit = async (req, res) => {
 module.exports.initialTrialGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
-        const data = await initialTrailGallery.findAll();
-        res.render('upazilla/initialTrial/initialTrailGallery', { title: 'প্রদর্শনীর প্রাথমিক প্রতিবেদন গ্যালারী',success:'', records: data, district:districts });
+        const data = await initialTrialGallery.findAll();
+        res.render('upazilla/initialTrial/initialTrailGallery', { title: 'প্রদর্শনীর প্রাথমিক প্রতিবেদন গ্যালারী',success:'',records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -744,7 +744,7 @@ module.exports.finalTrialEdit = async (req, res) => {
 module.exports.finalTrailGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
-        const data = await finalTrailGallery.findAll();
+        const data = await finalTrialGallery.findAll();
         res.render('upazilla/finalTrial/finalTrailGallery', { title: 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন গ্গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
@@ -1077,6 +1077,7 @@ module.exports.fieldDayDelete = async (req, res) => {
 };
 module.exports.fieldDayGallery=async(req,res)=>{
     try{
+        console.log("field day starts ---------------------------");
         var districts = await dd.findAll();
         const data = await fieldDayGallery.findAll();
         res.render('upazilla/fieldDay/fieldDayGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });

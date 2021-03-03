@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const finalTrailGallery = sequelize.define("finalTrailGallery", {
+    const finalTrialGallery = sequelize.define("finalTrialGallery", {
         id : {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -16,5 +16,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    return finalTrailGallery;
+    return finalTrialGallery;
 };
