@@ -9,7 +9,7 @@
                     <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <div class="panel-title"><h2>ফেরোমন ফাঁদ বিতরণ তথ্য ফর্ম</h2></div>
+                                <div class="panel-title"><h2>কৃষক পুরষ্কার তথ্য ফর্ম</h2></div>
                                 <p><%
                                 if(success !=''){ %>
                                 <%= success %>
@@ -17,56 +17,69 @@
                                 </p>
                                 </div>  
                             <div class="panel-body" >
-                                <form action="/upazilla/feromanEditPost/<%=records.id%>" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
+                                <form action="/upazilla/farmerPrizeFormPost" id="FieldTrialForm" class="form-horizontal" method="post"  role="form">
                                     <div id="signupalert" style="display:none" class="alert alert-danger">
                                         <p>Error:</p>
                                         <span></span>
                                     </div>
 
+                                    <input type="hidden" class="form-control" name="district" placeholder="জেলার নাম" value="<%=dds%>">
+                                    <input type="hidden" class="form-control" name="upazilla" placeholder="উপজেলার নাম" value="<%=upazillas%>">
+                                    
                                     <div class="form-group">
                                         <label for="name" class="col-md-3 control-label">কৃষকের নাম ও পিতা/স্বামীর নাম</label>
                                         <div class="col-md-9">
-                                        <input type="text" class="form-control" name="name" placeholder="কৃষকের নাম ও পিতা/স্বামীর নাম" value="<%=records.name%>">
+                                        <input type="text" class="form-control" name="name" placeholder="কৃষকের নাম ও পিতা/স্বামীর নাম">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="village" class="col-md-3 control-label">গ্রাম/ব্লক</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="village" placeholder="গ্রাম/ব্লক" value="<%=records.village%>">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="crop" class="col-md-3 control-label">ফসলের নাম</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="crop" placeholder="ফসলের নাম" value="<%=records.crop%>">
+                                            <input type="text" class="form-control" name="village" placeholder="গ্রাম/ব্লক">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="mobile" class="col-md-3 control-label">মোবাইল নম্বর</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="mobile" placeholder="মোবাইল নম্বর" value="<%=records.mobile%>">
+                                            <input type="text" class="form-control" name="mobile" placeholder="মোবাইল নম্বর">
                                         </div>
                                     </div>
+
 
                                     <div class="form-group">
-                                        <label for="feroman" class="col-md-3 control-label">লিউরসহ বিতরণকৃত ফেরোমন ফাঁদের সংখ্যা</label>
+                                        <label for="crop" class="col-md-3 control-label">যে ফসল আবাদ করে পুরস্কৃত হয়েছে তার নাম ও প্রযুক্তিসমূহ</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="feroman" placeholder="লিউরসহ বিতরণকৃত ফেরোমন ফাঁদের সংখ্যা" value="<%=records.feroman%>">
+                                            <input type="text" class="form-control" name="crop" placeholder="যে ফসল আবাদ করে পুরস্কৃত হয়েছে তার নাম ও প্রযুক্তিসমূহ">
                                         </div>
                                     </div>
 
+                                   
+
+                                    
                                     
                                 
                                     <div class="form-group">
                                         <label for="comment" class="col-md-3 control-label">মন্তব্য</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="comment" placeholder="মন্তব্য " value="<%=records.comment%>">
+                                            <input type="text" class="form-control" name="comment" placeholder="মন্তব্য ">
                                         </div>
                                     </div>
-
+                                    
+                                    <div class="form-group">
+                                        <div class="col-md-9">
+                                            <label for="year">বছর :</label>
+                                        <select id="year" name="year" required>
+                                            <option value="2017">২০১৭-১৮</option>
+                                            <option value="2018">২০১৮-১৯</option>
+                                            <option value="2019">২০১৯-২০</option>
+                                            <option value="2020">২০২০-২১</option>
+                                            <option value="2021">২০২১-২২</option>
+                                            <option value="2022">২০২২-২৩</option>
+                                        </select>
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="col-md-9">

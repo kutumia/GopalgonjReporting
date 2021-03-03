@@ -18,6 +18,7 @@ const {
     trainedFarmerGallery,
     trainedFarmerGalleryPost,
 
+    
     uploadkormokorta,
     uploadagriFair,
     uploadmotivation,

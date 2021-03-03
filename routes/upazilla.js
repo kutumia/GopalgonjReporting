@@ -76,6 +76,28 @@ const {
   motivationGallery,
   motivationGalleryPost,
 
+  feromanGallery,
+  feromanGalleryPost,
+  feromanEditPost,
+  feroman,
+  feromanYear,
+  feromanForm,
+  feromanFormPost,
+  feromanEdit,
+  feromanDelete,
+
+  farmerPrizeGallery,
+  farmerPrizeGalleryPost,
+  farmerPrizeEditPost,
+  farmerPrize,
+  farmerPrizeYear,
+  farmerPrizeForm,
+  farmerPrizeFormPost,
+  farmerPrizeEdit,
+  farmerPrizeDelete,
+
+  uploadfarmerPrize,
+  uploadferoman,
   uploadFarmerTraining,
   uploadagriFair,
   uploadfieldDay,
@@ -179,5 +201,25 @@ router.post("/motivationEditPost/:id", motivationEditPost);
 router.get("/motivationDelete/:id", motivationDelete);
 router.get("/motivationGallery", motivationGallery);
 router.post("/motivationGalleryPost", uploadmotivation, motivationGalleryPost);
+
+router.get("/feroman", feroman);
+router.post("/feromanYear", feromanYear);
+router.get("/feromanForm", feromanForm);
+router.post("/feromanFormPost", feromanFormPost);
+router.get("/feromanEdit/:id", feromanEdit);
+router.post("/feromanEditPost/:id", feromanEditPost);
+router.get("/feromanDelete/:id", feromanDelete);
+router.get("/feromanGallery", feromanGallery);
+router.post("/feromanGalleryPost", uploadferoman, feromanGalleryPost);
+
+router.get("/farmerPrize", farmerPrize);
+router.post("/farmerPrizeYear", farmerPrizeYear);
+router.get("/farmerPrizeForm", farmerPrizeForm);
+router.post("/farmerPrizeFormPost", farmerPrizeFormPost);
+router.get("/farmerPrizeEdit/:id", farmerPrizeEdit);
+router.post("/farmerPrizeEditPost/:id", farmerPrizeEditPost);
+router.get("/farmerPrizeDelete/:id", farmerPrizeDelete);
+router.get("/farmerPrizeGallery", farmerPrizeGallery);
+router.post("/farmerPrizeGalleryPost", uploadfarmerPrize, farmerPrizeGalleryPost);
 
 module.exports = router;

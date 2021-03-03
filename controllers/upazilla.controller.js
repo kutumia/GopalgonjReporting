@@ -11,7 +11,8 @@ const machinery = db.machinery;
 const motivation = db.motivation;
 const fieldDay = db.fieldDay;
 const agriFair = db.agriFair;
-
+const farmerPrize = db.farmerPrize;
+const feromans = db.feroman;
 const trainedFarmerGallery = db.trainedFarmerGallery;
 const initialTrialGallery = db.initialTrialGallery
 const finalTrialGallery = db.finalTrialGallery;
@@ -46,6 +47,40 @@ var uploadFarmerTraining = multer({
   storage: storageFarmerTraining,
 }).single("farmerTraining");
 exports.uploadFarmerTraining = uploadFarmerTraining;
+
+// Multer setup for farmerPrize-------------------
+var storagefarmerPrize = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/farmerPrizeGallery");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+var uploadfarmerPrize = multer({
+  storage: storagefarmerPrize,
+}).single("farmerPrize");
+exports.uploadfarmerPrize = uploadfarmerPrize;
+
+// Multer setup for feroman-------------------
+var storageferoman = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/feromanGallery");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+var uploadferoman = multer({
+  storage: storageferoman,
+}).single("feroman");
+exports.uploadferoman = uploadferoman;
 
 //multer setup for agriFair image-----------------
 var storageagriFair = multer.diskStorage({
@@ -187,13 +222,7 @@ module.exports.upazillaloginpost = async (req, res) => {
               req.session.type = "upazilla";
               req.session.user_id = data[0].id;
               const id = req.session.user_id;
-              // res.locals.type = req.session.type;
-              // res.locals.user_id = req.session.user_id;
               console.log("session=", req.session.type, res.locals);
-              // const token=jwt.sign({id},process.env.JWT_SECRET,token{
-              //     expiresIn:process.env.JWT_EXPIRES_IN
-              // });
-              // console.log("the token is :"+)
               res.redirect("/upazilla/dashboard");
             } else {
               return res.status(200).render("upazilla/login", {
@@ -217,27 +246,6 @@ module.exports.upazillaloginpost = async (req, res) => {
             err.message || "Some error occurred while retrieving tutorials.",
         });
       });
-    // upazilla.findAll({ where: {uname: uname} })
-    // .then(data => {
-    //     if(data.length > 0){
-    //         bcrypt.compareSync(password , upazilla.password, function(err, result) {
-    //             if(result== true){
-    //                 res.redirect('/upazilla/dashboard');
-    //             }
-    //             else{
-    //                 res.redirect('/upazilla/dashboard');
-    //             }
-    //         });
-    //     }else{
-    //         return res.status(200).render('upazilla/login', { title: 'Horticulture Wing Central Management Software',msg:'Please provide a username and password' });
-    //     }
-    // })
-    // .catch(err => {
-    //   res.status(500).send({
-    //     message:
-    //       err.message || "Some error occurred while retrieving tutorials."
-    //   });
-    // });
   } catch (error) {
     console.log(error);
   }
@@ -1626,3 +1634,356 @@ module.exports.motivationGalleryPost=async(req,res)=>{
     }
 };
 //motivation controller end
+
+//feroman controller
+module.exports.feroman = async (req, res) => {
+  await feromans
+    .findAll({
+      where: { upazilla_id: req.session.user_id },
+    })
+    .then((data) => {
+      console.log("inside");
+      res.render("upazilla/feroman/feroman", {
+        title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+        success: "",
+        records: data,
+      });
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+
+  //  records:result
+};
+module.exports.feromanYear = async (req, res) => {
+  await feromans
+    .findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+    .then((data) => {
+      res.render(
+        "upazilla/feroman/feromanTable",
+        { records: data },
+        function (err, html) {
+          res.send(html);
+        }
+      );
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+};
+module.exports.feromanForm = async (req, res) => {
+  var upazillass = await upazilla.findOne({
+    where: { id: req.session.user_id },
+  });
+  var upazillas = upazillass.upazilla;
+  var ddata = upazillass.dd_id;
+  var ddss = await dd.findOne({ where: { id: ddata } });
+  var dds = ddss.district;
+  try {
+    res.render("upazilla/feroman/feromanForm", {
+      title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+      msg: "",
+      success: "",
+      dds: dds,
+      upazillas: upazillas,
+      user_id: req.session.user_id,
+    });
+  } catch {
+    console.log(err);
+  }
+};
+module.exports.feromanFormPost = async (req, res) => {
+  var district = req.body.district;
+  var upazilla = req.body.upazilla;
+  var name = req.body.name;
+  var crop = req.body.crop;
+  var feroman = req.body.feroman;
+  var village = req.body.village;
+  var mobile = req.body.mobile;
+  var comment = req.body.comment;
+  var year = req.body.year;
+  var user_id = req.body.user_id;
+
+  await feromans.create({
+      district: district,
+      upazilla: upazilla,
+      name: name,
+      crop: crop,
+      feroman:feroman,
+      village: village,
+      mobile: mobile,
+      comment: comment,
+      year: year,
+      upazilla_id: user_id,
+    })
+
+    .then((data) => {
+      res.redirect("/upazilla/feroman");
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+};
+module.exports.feromanEdit = async (req, res) => {
+  await feromans
+    .findByPk(req.params.id)
+    .then((data) => {
+      console.log("inside");
+      res.render("upazilla/feroman/feromanEdit", {
+        title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+        msg: "",
+        success: "",
+        records: data,
+      });
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+};
+module.exports.feromanEditPost = async (req, res) => {
+  var name = req.body.name;
+  var crop = req.body.crop;
+  var feroman = req.body.feroman;
+  var village = req.body.village;
+  var mobile = req.body.mobile;
+  var comment = req.body.comment;
+
+  await feromans
+    .update(
+      {
+        name: name,
+        crop:crop,
+        feroman: feroman,
+        village: village,
+        mobile: mobile,
+        comment: comment,
+      },
+      {
+        where: { id: req.params.id },
+      }
+    )
+
+    .then((data) => {
+      res.redirect("/upazilla/feroman");
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+};
+module.exports.feromanDelete = async (req, res) => {
+  var feromanDelete = await feromans.findByPk(req.params.id);
+  try {
+    feromanDelete.destroy();
+    res.redirect("/upazilla/feroman");
+  } catch {
+    console.log("outside", err);
+  }
+};
+module.exports.feromanGallery=async(req,res)=>{
+    try{
+        var districts = await dd.findAll();
+        const data = await feromanGallery.findAll();
+        res.render('upazilla/feroman/feromanGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
+};
+module.exports.feromanGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/feromanGallery/" + req.file.filename;
+        await feromanGallery.create({
+                image: imagePath,
+                dd_id: req.body.district,
+                upazilla_id: req.body.upazilla
+            })
+            .then(data => {
+                res.redirect('/upazilla/feromanGallery');
+            }).catch(err => {
+                console.log("file not uploaded successfully",err);
+            });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    }
+};
+//feroman controller end
+
+//farmerPrize controller
+module.exports.farmerPrize = async (req, res) => {
+  await farmerPrize
+    .findAll({
+      where: { upazilla_id: req.session.user_id },
+    })
+    .then((data) => {
+      console.log("inside");
+      res.render("upazilla/farmerPrize/farmerPrize", {
+        title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+        success: "",
+        records: data,
+      });
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+
+  //  records:result
+};
+module.exports.farmerPrizeYear = async (req, res) => {
+  await farmerPrize
+    .findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+    .then((data) => {
+      res.render(
+        "upazilla/farmerPrize/farmerPrizeTable",
+        { records: data },
+        function (err, html) {
+          res.send(html);
+        }
+      );
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+};
+module.exports.farmerPrizeForm = async (req, res) => {
+  var upazillass = await upazilla.findOne({
+    where: { id: req.session.user_id },
+  });
+  var upazillas = upazillass.upazilla;
+  var ddata = upazillass.dd_id;
+  var ddss = await dd.findOne({ where: { id: ddata } });
+  var dds = ddss.district;
+  try {
+    res.render("upazilla/farmerPrize/farmerPrizeForm", {
+      title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+      msg: "",
+      success: "",
+      dds: dds,
+      upazillas: upazillas,
+      user_id: req.session.user_id,
+    });
+  } catch {
+    console.log(err);
+  }
+};
+module.exports.farmerPrizeFormPost = async (req, res) => {
+  var district = req.body.district;
+  var upazilla = req.body.upazilla;
+  var name = req.body.name;
+  var crop = req.body.crop;
+  var village = req.body.village;
+  var mobile = req.body.mobile;
+  var comment = req.body.comment;
+  var year = req.body.year;
+  var user_id = req.body.user_id;
+
+  await farmerPrize
+    .create({
+      district: district,
+      upazilla: upazilla,
+      name: name,
+      crop: crop,
+      village: village,
+      mobile: mobile,
+      comment: comment,
+      year: year,
+      upazilla_id: user_id,
+    })
+
+    .then((data) => {
+      res.redirect("/upazilla/farmerPrize");
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+};
+module.exports.farmerPrizeEdit = async (req, res) => {
+  await farmerPrize
+    .findByPk(req.params.id)
+    .then((data) => {
+      console.log("inside");
+      res.render("upazilla/farmerPrize/farmerPrizeEdit", {
+        title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+        msg: "",
+        success: "",
+        records: data,
+      });
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+};
+module.exports.farmerPrizeEditPost = async (req, res) => {
+  var name = req.body.name;
+  var nid = req.body.nid;
+  var crop = req.body.crop;
+  var village = req.body.village;
+  var mobile = req.body.mobile;
+  var comment = req.body.comment;
+
+  await farmerPrize
+    .update(
+      {
+        name: name,
+        nid: nid,
+        crop: crop,
+        village: village,
+        mobile: mobile,
+        comment: comment,
+      },
+      {
+        where: { id: req.params.id },
+      }
+    )
+
+    .then((data) => {
+      res.redirect("/upazilla/farmerPrize");
+    })
+    .catch((err) => {
+      console.log("outside", err);
+    });
+};
+module.exports.farmerPrizeDelete = async (req, res) => {
+  var farmerPrizeDelete = await farmerPrize.findByPk(req.params.id);
+  try {
+    farmerPrizeDelete.destroy();
+    res.redirect("/upazilla/farmerPrize");
+  } catch {
+    console.log("outside", err);
+  }
+};
+module.exports.farmerPrizeGallery=async(req,res)=>{
+    try{
+        var districts = await dd.findAll();
+        const data = await farmerPrizeGallery.findAll();
+        res.render('upazilla/farmerPrize/farmerPrizeGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
+};
+module.exports.farmerPrizeGalleryPost=async(req,res)=>{
+    const path = req.file && req.file.path;
+    if(path){
+        var imagePath = "/farmerPrizeGallery/" + req.file.filename;
+        await farmerPrizeGallery.create({
+                image: imagePath,
+                dd_id: req.body.district,
+                upazilla_id: req.body.upazilla
+            })
+            .then(data => {
+                res.redirect('/upazilla/farmerPrizeGallery');
+            }).catch(err => {
+                console.log("file not uploaded successfully",err);
+            });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    }
+};
+//farmerPrize controller end

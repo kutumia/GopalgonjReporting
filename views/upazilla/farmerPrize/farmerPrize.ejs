@@ -26,10 +26,10 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-8">
-                                <a href="/upazilla/feromanForm" class="btn btn-success btn-group-sm ">ফেরোমন ফাঁদ বিতরণ তথ্য ফর্ম</a>
+                                <a href="/upazilla/farmerPrizeForm" class="btn btn-success btn-group-sm ">কৃষক পুরষ্কার তথ্য ফর্ম</a>
                             </div>
                             <div class="col-md-4">
-                                <a href="/upazilla/feromanGallery" class="btn btn-success btn-group-sm ">গ্যালারী</a>
+                                <a href="/upazilla/farmerPrizeGallery" class="btn btn-success btn-group-sm ">গ্যালারী</a>
                             </div>
 
                         </div>
@@ -37,7 +37,7 @@
                         <div class="table-responsive" id="output"></div>
 
                         <input type="button" id="btnExport" value="Download PDF" />
-                        <button onclick="exportToExcel('tblexportData', 'ফেরোমন ফাঁদ বিতরণ তথ্য')" class="btn btn-success">Export Table Data To Excel File</button>
+                        <button onclick="exportToExcel('tblexportData', 'কৃষক পুরষ্কার তথ্য')" class="btn btn-success">Export Table Data To Excel File</button>
 
 
                         <div id="output"></div>
@@ -54,7 +54,7 @@
 <script>
     async function exportToPdf() {
         var year = $('#year').val();
-        const { data } = await axios.post(`/upazilla/generatePdfferoman`,{year: year});
+        const { data } = await axios.post(`/upazilla/generatePdffarmerPrize`,{year: year});
         var mywindow = window.open("", "PRINT", "height=400,width=600");
         mywindow.document.write(data.html);
         mywindow.document.close(); // necessary for IE >= 10
@@ -129,7 +129,7 @@
         var year = $('#year').val();
         $.ajax({
             type: "POST",
-            url: "/upazilla/feromanYear",
+            url: "/upazilla/farmerPrizeYear",
             data: {year: year},
             datatype: "json",
             beforeSend: function() {
@@ -153,7 +153,7 @@
         var year = $('#year').val();
         $.ajax({
             type: "POST",
-            url: "/upazilla/feromanYear",
+            url: "/upazilla/farmerPrizeYear",
             data: {year: year},
             datatype: "json",
             beforeSend: function() {

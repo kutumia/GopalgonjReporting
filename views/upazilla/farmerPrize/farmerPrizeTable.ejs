@@ -7,8 +7,7 @@
         <th>কৃষকের নাম ও পিতা/স্বামীর নাম</th>
         <th>গ্রাম/ব্লক</th>
         <th>মোবাইল নম্বর</th>
-        <th>ফসলের নাম</th>
-        <th>লিউরসহ বিতরণকৃত ফেরোমন ফাঁদের সংখ্যা</th>
+        <th>যে ফসল আবাদ করে পুরস্কৃত হয়েছে তার নাম ও প্রযুক্তিসমূহ</th>
         <th>মন্তব্য</th>
         <th>পরিবর্তন/মুছুন</th>
     </tr>  
@@ -22,10 +21,9 @@
                 <td><%= row.village %></td>
                 <td><%= row.mobile%></td>
                 <td><%= row.crop %></td>
-                <td><%= row.feroman %></td>
                 <td><%= row.comment %></td>
-                <td><a class="btn btn-primary btn-xs" href="/upazilla/feromanEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-danger btn-xs" href="/upazilla/feromanDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
+                <td><a class="btn btn-primary btn-xs" href="/upazilla/farmerPrizeEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/upazilla/farmerPrizeDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         <% }) %>
@@ -40,8 +38,8 @@
         <th>কৃষকের নাম ও পিতা/স্বামীর নাম</th>
         <th>গ্রাম/ব্লক</th>
         <th>মোবাইল নম্বর</th>
-        <th>ফসলের নাম</th>
-        <th>লিউরসহ বিতরণকৃত ফেরোমন ফাঁদের সংখ্যা</th>
+        <th>যে ফসল আবাদ করে পুরস্কৃত হয়েছে তার নাম ও প্রযুক্তিসমূহ</th>
+
         <th>মন্তব্য</th>
         </tr>
         </thead>
