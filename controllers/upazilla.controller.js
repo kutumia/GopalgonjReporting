@@ -510,17 +510,19 @@ module.exports.trainedFarmerGallery=async(req,res)=>{
 module.exports.trainedFarmerGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
+      try{
         var imagePath = "/farmerTrainingGallery/" + req.file.filename;
-        await trainedFarmerGallery.create({
-            image: imagePath,
-            dd_id: req.body.district,
-            upazilla_id: req.body.upazilla
+        const data = await upazilla.findByPk(req.session.user_id);
+        const trainedFarmerGalleryPost = await trainedFarmerGallery.create({
+          image: imagePath,
+          dd_id: data.dd_id,
+          upazilla_id: req.session.user_id
         })
-        .then(data => {
-            res.redirect('/upazilla/trainedFarmerGallery');
-        }).catch(err => {
-            console.log("file not uploaded successfully",err);
-        });
+        res.redirect('/upazilla/trainedFarmerGallery');
+      }
+      catch (e) {
+        console.log(e)
+      }
     }
     else{
         console.log("file not uploaded successfully");
@@ -630,21 +632,24 @@ module.exports.initialTrialGallery=async(req,res)=>{
 module.exports.initialTrialGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
+
+      try{
         var imagePath = "/primaryPresentationGallery/" + req.file.filename;
-        await initialTrailGallery.create({
-            image: imagePath,
-            dd_id: req.body.district,
-            upazilla_id: req.body.upazilla
+        const data = await upazilla.findByPk(req.session.user_id);
+        const initialTrailGalleryPost = await initialTrailGallery.create({
+          image: imagePath,
+          dd_id: data.dd_id,
+          upazilla_id: req.session.user_id
         })
-        .then(data => {
-            res.redirect('/upazilla/initialTrialGallery');
-        }).catch(err => {
-            console.log("file not uploaded successfully",err);
-        });
+        res.redirect('/upazilla/initialTrialGallery');
+      }
+      catch (e) {
+        console.log(e)
+      }
     }
     else{
         console.log("file not uploaded successfully");
-    };
+    }
 };
 //initialTrial controller end
 
