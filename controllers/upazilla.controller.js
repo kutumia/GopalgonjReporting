@@ -12,6 +12,15 @@ const motivation = db.motivation;
 const fieldDay = db.fieldDay;
 const agriFair = db.agriFair;
 
+const trainedFarmerGallery = db.trainedFarmerGallery;
+const initialTrailGallery = db.initialTrailGallery;
+const finalTrailGallery = db.finalTrailGallery;
+const agriFairGallery = db.agriFairGallery;
+const fieldDayGallery = db.fieldDayGallery;
+const irrigationGallery = db.irrigationGallery;
+const machineryGallery = db.machineryGallery;
+const motivationGallery = db.motivationGallery;
+
 const multer = require("multer");
 const path = require("path");
 
@@ -489,6 +498,7 @@ module.exports.trainedFarmerDelete = async (req, res) => {
 };
 module.exports.trainedFarmerGallery=async(req,res)=>{
     try{
+        console.log("upazilla",req.session.user_id);
         var districts = await dd.findAll();
         const data = await trainedFarmerGallery.findAll();
         res.render('upazilla/trainedFarmer/trainedFarmerGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
