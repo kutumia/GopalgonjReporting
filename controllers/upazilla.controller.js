@@ -21,6 +21,8 @@ const fieldDayGallery = db.fieldDayGallery;
 const irrigationGallery = db.irrigationGallery;
 const machineryGallery = db.machineryGallery;
 const motivationGallery = db.motivationGallery;
+const feromanGallery = db.feromanGallery;
+const farmerPrizeGallery = db.farmerPrizeGallery;
 
 const multer = require("multer");
 const path = require("path");

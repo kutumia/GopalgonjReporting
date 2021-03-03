@@ -18,7 +18,8 @@ const {
     trainedFarmerGallery,
     trainedFarmerGalleryPost,
 
-    
+    uploadferoman,
+    uploadfarmerPrize,
     uploadkormokorta,
     uploadagriFair,
     uploadmotivation,
@@ -135,7 +136,27 @@ const {
     upoKormokortaFormPost,
     upoKormokortaEdit,
     upoKormokortaEditPost,
-    upoKormokortaDelete
+    upoKormokortaDelete,
+
+    feromanGallery,
+  feromanGalleryPost,
+  feromanEditPost,
+  feroman,
+  feromanYear,
+  feromanForm,
+  feromanFormPost,
+  feromanEdit,
+  feromanDelete,
+
+  farmerPrizeGallery,
+  farmerPrizeGalleryPost,
+  farmerPrizeEditPost,
+  farmerPrize,
+  farmerPrizeYear,
+  farmerPrizeForm,
+  farmerPrizeFormPost,
+  farmerPrizeEdit,
+  farmerPrizeDelete,
 
 } = require('../controllers/pd.controller');
 router.get('/login',pdlogin);
@@ -258,6 +279,26 @@ router.post('/upoKormokortaEditPost/:id',upoKormokortaEditPost);
 router.get('/upoKormokortaDelete/:id',upoKormokortaDelete);
 router.get('/upoKormokortaGallery',upoKormokortaGallery);
 router.post('/upoKormokortaGalleryPost',uploadupoKormokorta,upoKormokortaGalleryPost);
+
+router.get('/farmerPrize',farmerPrize);
+router.post('/farmerPrizeYear',farmerPrizeYear);
+router.get('/farmerPrizeForm',farmerPrizeForm);
+router.post('/farmerPrizeFormPost',farmerPrizeFormPost);
+router.get('/farmerPrizeEdit/:id',farmerPrizeEdit);
+router.post('/farmerPrizeEditPost/:id',farmerPrizeEditPost);
+router.get('/farmerPrizeDelete/:id',farmerPrizeDelete);
+router.get('/farmerPrizeGallery',farmerPrizeGallery);
+router.post('/farmerPrizeGalleryPost',uploadfarmerPrize,farmerPrizeGalleryPost);
+
+router.get('/feroman',feroman);
+router.post('/feromanYear',feromanYear);
+router.get('/feromanForm',feromanForm);
+router.post('/feromanFormPost',feromanFormPost);
+router.get('/feromanEdit/:id',feromanEdit);
+router.post('/feromanEditPost/:id',feromanEditPost);
+router.get('/feromanDelete/:id',feromanDelete);
+router.get('/feromanGallery',feromanGallery);
+router.post('/feromanGalleryPost',uploadferoman,feromanGalleryPost);
 
 
 module.exports = router;
