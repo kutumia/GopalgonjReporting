@@ -632,7 +632,6 @@ module.exports.initialTrialGallery=async(req,res)=>{
 module.exports.initialTrialGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
-
       try{
         var imagePath = "/primaryPresentationGallery/" + req.file.filename;
         const data = await upazilla.findByPk(req.session.user_id);
@@ -754,21 +753,23 @@ module.exports.finalTrailGallery=async(req,res)=>{
 module.exports.finalTrailGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
+      try{
         var imagePath = "/finalPresentationGallery/" + req.file.filename;
-        await finalTrailGallery.create({
-            image: imagePath,
-            dd_id: req.body.district,
-            upazilla_id: req.body.upazilla
+        const data = await upazilla.findByPk(req.session.user_id);
+        const finalTrailGalleryPost = await finalTrailGallery.create({
+          image: imagePath,
+          dd_id: data.dd_id,
+          upazilla_id: req.session.user_id
         })
-        .then(data => {
-            res.redirect('/upazilla/finalTrailGallery');
-        }).catch(err => {
-            console.log("file not uploaded successfully",err);
-        });
+        res.redirect('/upazilla/finalTrailGallery');
+      }
+      catch (e) {
+        console.log(e)
+      }
     }
     else{
         console.log("file not uploaded successfully");
-    };
+    }
 };
 //finalTrial controller end
 
@@ -931,17 +932,20 @@ module.exports.agriFairGallery=async(req,res)=>{
 module.exports.agriFairGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
+
+      try{
         var imagePath = "/agriFairGallery/" + req.file.filename;
-        await agriFairGallery.create({
-                image: imagePath,
-                dd_id: req.body.district,
-                upazilla_id: req.body.upazilla
+        const data = await upazilla.findByPk(req.session.user_id);
+        const agriFairGalleryPost = agriFairGallery.create({
+          image: imagePath,
+          dd_id: data.dd_id,
+          upazilla_id: req.session.user_id
         })
-        .then(data => {
-            res.redirect('/upazilla/agriFairGallery');
-        }).catch(err => {
-            console.log("file not uploaded successfully",err);
-        });
+        res.redirect('/upazilla/agriFairGallery');
+      }
+      catch (e) {
+        console.log(e)
+      }
     }
     else{
         console.log("file not uploaded successfully");
@@ -1089,21 +1093,24 @@ module.exports.fieldDayGallery=async(req,res)=>{
 module.exports.fieldDayGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
+
+      try{
         var imagePath = "/fieldDayGallery/" + req.file.filename;
-        await fieldDayGallery.create({
-                image: imagePath,
-                dd_id: req.body.district,
-                upazilla_id: req.body.upazilla
-            })
-            .then(data => {
-                res.redirect('/upazilla/fieldDayGallery');
-            }).catch(err => {
-                console.log("file not uploaded successfully",err);
-            });
-        }
-        else{
-            console.log("file not uploaded successfully");
-        }
+        const data = await upazilla.findByPk(req.session.user_id);
+        const fieldDayGalleryPost = await fieldDayGallery.create({
+          image: imagePath,
+          dd_id: data.dd_id,
+          upazilla_id: req.session.user_id
+        })
+        res.redirect('/upazilla/fieldDayGallery');
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
+    else{
+        console.log("file not uploaded successfully");
+    }
 };
 //fieldDay controller end
 
@@ -1262,17 +1269,19 @@ module.exports.irrigationGallery=async(req,res)=>{
 module.exports.irrigationGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
+      try{
         var imagePath = "/irrigationGallery/" + req.file.filename;
-        await irrigationGallery.create({
-            image: imagePath,
-            dd_id: req.body.district,
-            upazilla_id: req.body.upazilla
+        const data = await upazilla.findByPk(req.session.user_id);
+        const irrigationGalleryPost = await irrigationGallery.create({
+          image: imagePath,
+          dd_id: data.dd_id,
+          upazilla_id: req.session.user_id
         })
-        .then(data => {
-            res.redirect('/upazilla/irrigationGallery');
-        }).catch(err => {
-            console.log("file not uploaded successfully",err);
-        });
+        res.redirect('/upazilla/irrigationGallery');
+      }
+      catch (e) {
+        console.log(e)
+      }
     }
     else{
         console.log("file not uploaded successfully");
@@ -1440,17 +1449,19 @@ module.exports.machineryGallery=async(req,res)=>{
 module.exports.machineryGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
+      try{
         var imagePath = "/agriToolsGallery/" + req.file.filename;
-        await machineryGallery.create({
-            image: imagePath,
-            dd_id: req.body.district,
-            upazilla_id: req.body.upazilla
+        const data = await upazilla.findByPk(req.session.user_id);
+        const machineryGalleryPost = await machineryGallery.create({
+          image: imagePath,
+          dd_id: data.dd_id,
+          upazilla_id: req.session.user_id
         })
-        .then(data => {
-            res.redirect('/upazilla/machineryGallery');
-        }).catch(err => {
-            console.log("file not uploaded successfully",err);
-        });
+        res.redirect('/upazilla/machineryGallery');
+      }
+      catch (e) {
+        console.log(e)
+      }
     }
     else{
         console.log("file not uploaded successfully");
@@ -1614,17 +1625,20 @@ module.exports.motivationGallery=async(req,res)=>{
 module.exports.motivationGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
+
+      try{
         var imagePath = "/motivationGallery/" + req.file.filename;
-        await motivationGallery.create({
-                image: imagePath,
-                dd_id: req.body.district,
-                upazilla_id: req.body.upazilla
-            })
-            .then(data => {
-                res.redirect('/upazilla/motivationGallery');
-            }).catch(err => {
-                console.log("file not uploaded successfully",err);
-            });
+        const data = await upazilla.findByPk(req.session.user_id);
+        const motivationGalleryPost = await motivationGallery.create({
+          image: imagePath,
+          dd_id: data.dd_id,
+          upazilla_id: req.session.user_id
+        })
+        res.redirect('/upazilla/motivationGallery');
+      }
+      catch (e) {
+        console.log(e)
+      }
     }
     else{
         console.log("file not uploaded successfully");
