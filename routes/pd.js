@@ -57,8 +57,8 @@ const {
 
     finalTrialEdit,
     finalTrialEditPost,
-    finalTrailGallery,
-    finalTrailGalleryPost,
+    finalTrialGallery,
+    finalTrialGalleryPost,
 
     agriFairEdit,
     agriFairEditPost,
@@ -142,21 +142,17 @@ const {
   feromanGalleryPost,
   feromanEditPost,
   feroman,
-  feromanYear,
-  feromanForm,
-  feromanFormPost,
+  feromanFilter,
+  feromanDistrictFilter,
   feromanEdit,
-  feromanDelete,
 
   farmerPrizeGallery,
   farmerPrizeGalleryPost,
   farmerPrizeEditPost,
   farmerPrize,
-  farmerPrizeYear,
-  farmerPrizeForm,
-  farmerPrizeFormPost,
+  farmerPrizeFilter,
+  farmerPrizeDistrictFilter,
   farmerPrizeEdit,
-  farmerPrizeDelete,
 
 } = require('../controllers/pd.controller');
 router.get('/login',pdlogin);
@@ -188,8 +184,8 @@ router.post('/finalTrialFilter',finalTrialFilter);
 router.post('/finalTrialDistrictFilter',finalTrialDistrictFilter);
 router.get('/finalTrialEdit/:id',finalTrialEdit);
 router.post('/finalTrialEditPost/:id',finalTrialEditPost);
-router.get('/finalTrailGallery', finalTrailGallery);
-router.post('/finalTrailGalleryPost', uploadFinalPresentation, finalTrailGalleryPost)
+router.get('/finalTrialGallery', finalTrialGallery);
+router.post('/finalTrialGalleryPost', uploadFinalPresentation, finalTrialGalleryPost)
 
 router.get('/agriFair',agriFair);
 router.post('/agriFairFilter',agriFairFilter);
@@ -281,22 +277,18 @@ router.get('/upoKormokortaGallery',upoKormokortaGallery);
 router.post('/upoKormokortaGalleryPost',uploadupoKormokorta,upoKormokortaGalleryPost);
 
 router.get('/farmerPrize',farmerPrize);
-router.post('/farmerPrizeYear',farmerPrizeYear);
-router.get('/farmerPrizeForm',farmerPrizeForm);
-router.post('/farmerPrizeFormPost',farmerPrizeFormPost);
+router.post('/farmerPrizeFilter',farmerPrizeFilter);
+router.post('/farmerPrizeDistrictFilter',farmerPrizeDistrictFilter);
 router.get('/farmerPrizeEdit/:id',farmerPrizeEdit);
 router.post('/farmerPrizeEditPost/:id',farmerPrizeEditPost);
-router.get('/farmerPrizeDelete/:id',farmerPrizeDelete);
 router.get('/farmerPrizeGallery',farmerPrizeGallery);
 router.post('/farmerPrizeGalleryPost',uploadfarmerPrize,farmerPrizeGalleryPost);
 
 router.get('/feroman',feroman);
-router.post('/feromanYear',feromanYear);
-router.get('/feromanForm',feromanForm);
-router.post('/feromanFormPost',feromanFormPost);
+router.post('/feromanFilter',feromanFilter);
+router.post('/feromanDistrictFilter',feromanDistrictFilter);
 router.get('/feromanEdit/:id',feromanEdit);
 router.post('/feromanEditPost/:id',feromanEditPost);
-router.get('/feromanDelete/:id',feromanDelete);
 router.get('/feromanGallery',feromanGallery);
 router.post('/feromanGalleryPost',uploadferoman,feromanGalleryPost);
 

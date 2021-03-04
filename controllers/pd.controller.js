@@ -21,13 +21,13 @@ const farmerPrize = db.farmerPrize;
 const kormokortaGallery = db.kormokortaGallery;
 const localTrainingGallery = db.localTrainingGallery;
 const foreignTrainingGallery = db.foreignTrainingGallery;
-const upoKormokortaGallery = db.upoKormokortaGallery;
+const upoKormokortaGallerys = db.upoKormokortaGallery;
 const agriFairGallery = db.agriFairGallery;
 const fieldDayGallery = db.fieldDayGallery;
 const motivationGallery = db.motivationGallery;
 const trainedFarmerGallery = db.trainedFarmerGallery;
-const initialTrailGallery = db.initialTrailGallery;
-const finalTrailGallery = db.finalTrailGallery;
+const initialTrialGallery = db.initialTrialGallery;
+const finalTrialGallery = db.finalTrialGallery;
 const machineryGallery = db.machineryGallery;
 const irrigationGallery = db.irrigationGallery;
 const feromanGallery = db.feromanGallery;
@@ -42,6 +42,32 @@ const bcrypt= require('bcryptjs');
 const { request, response } = require('express');
 const express = require('express');
 
+//multer setup for feroman image
+var storageferoman = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/feromanGallery');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var uploadferoman = multer({
+    storage: storageferoman,
+ }).single("feroman");
+ exports.uploadferoman=uploadferoman;
+ //multer setup for farmerPrize image
+var storagefarmerPrize = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/farmerPrizeGallery');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });  
+var uploadfarmerPrize = multer({
+    storage: storagefarmerPrize,
+ }).single("farmerPrize");
+ exports.uploadfarmerPrize=uploadfarmerPrize;
 //multer setup for kormokorta image
 var storagekormokorta = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -344,6 +370,7 @@ module.exports.trainedFarmerFilter=async(req,res)=>{
         where: {year: req.body.year,upazilla_id: req.body.upazilla}
     })
     .then(data => {
+        console.log("data",data,req.body.year,req.body.upazilla);
         res.render('pd/trainedFarmer/trainedFarmerTable', {records: data} ,function(err, html) {
             res.send(html);
         });
@@ -497,7 +524,7 @@ await initialTrial.update({
 module.exports.initialTrialGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
-        const data = await initialTrailGallery.findAll();
+        const data = await initialTrialGallery.findAll();
         res.render('pd/initialTrial/initialTrailGallery', { title: 'প্রদর্শনীর প্রাথমিক প্রতিবেদন গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
@@ -508,7 +535,7 @@ module.exports.initialTrialGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
         var imagePath = "/primaryPresentationGallery/" + req.file.filename;
-        await initialTrailGallery.create({
+        await initialTrialGallery.create({
             image: imagePath,
             dd_id: req.body.district,
             upazilla_id: req.body.upazilla
@@ -594,27 +621,27 @@ await finalTrial.update({
         res.render('errorpage',err);
     });
 };
-module.exports.finalTrailGallery=async(req,res)=>{
+module.exports.finalTrialGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
-        const data = await finalTrailGallery.findAll();
-        res.render('pd/finalTrial/finalTrailGallery', { title: 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন গ্গ্যালারী',success:'', records: data, district:districts });
+        const data = await finalTrialGallery.findAll();
+        res.render('pd/finalTrial/finalTrialGallery', { title: 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন গ্গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
     }
 };
-module.exports.finalTrailGalleryPost=async(req,res)=>{
+module.exports.finalTrialGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
         var imagePath = "/finalPresentationGallery/" + req.file.filename;
-        await finalTrailGallery.create({
+        await finalTrialGallery.create({
             image: imagePath,
             dd_id: req.body.district,
             upazilla_id: req.body.upazilla
         })
         .then(data => {
-            res.redirect('/pd/finalTrailGallery');
+            res.redirect('/pd/finalTrialGallery');
         }).catch(err => {
             console.log("file not uploaded successfully",err);
         });
@@ -1739,7 +1766,7 @@ module.exports.upoKormokortaDelete=async(req,res)=>{
     }
 };
 module.exports.upoKormokortaGallery=async(req,res)=>{
-    await upoKormokortaGallery.findAll()
+    await upoKormokortaGallerys.findAll()
     .then(data => {
         console.log("inside");
         res.render('pd/upoKormokorta/upoKormokortaGallery', { title: 'উপ সহকারী কৃষি কর্মকর্তা গ্যালারী',success:'', records: data });
@@ -1756,7 +1783,7 @@ module.exports.upoKormokortaGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
         var imagePath = "/upoKormokortaGallery/" + req.file.filename;
-        await upoKormokortaGallery.create({
+        await upoKormokortaGallerys.create({
                 image: imagePath,
             })
             .then(data => {
@@ -1775,286 +1802,201 @@ module.exports.upoKormokortaGalleryPost=async(req,res)=>{
 //upoKormokorta controller end
 
 //feroman controller
+//feroman controller
 module.exports.feroman=async(req,res)=>{
-    await feroman.findAll()
-    .then(data => {
+    try{
+        var districts=await dd.findAll();
         console.log("inside");
-        res.render('pd/feroman/feroman', { title: 'উপ সহকারী কৃষি কর্মকর্তা প্রশিক্ষণ তথ্য',success:'', records: data });
-    })
-    .catch(err => {
+        res.render('pd/feroman/feroman', { title: 'ফেরোমন ফাঁদ বিতরণ তথ্য',success:'',district:districts });
+    }
+    catch(err){
         console.log("outside",err);
-
-    })
+    }
      
     //  records:result
 
 };
-module.exports.feromanYear=async(req,res)=>{
-    await feroman.findAll({where: {year: req.body.year}})
+module.exports.feromanFilter=async(req,res)=>{
+    await feroman.findAll({ 
+        where: {year: req.body.year,upazilla_id: req.body.upazilla}
+    })
     .then(data => {
         res.render('pd/feroman/feromanTable', {records: data} ,function(err, html) {
             res.send(html);
         });
     })
     .catch(err => {
+        res.render('errorpage',err);    })
+
+};
+module.exports.feromanDistrictFilter=async(req,res)=>{
+    try{
+        // var dds=await dd.findAll({where: {id: req.body.district}});
+        var upazillass=await upazilla.findAll({where: {dd_id: req.body.district}});
+        console.log("inside");
+        res.send(upazillass)
+    }
+    catch(err){
         console.log("outside",err);
-    })
+    }
+     
 
-};
-module.exports.feromanForm=async(req,res)=>{
-    res.render('pd/feroman/feromanForm', { title: 'উপ সহকারী কৃষি কর্মকর্তা প্রশিক্ষণ',msg:'' ,success:''});
-
-};
-module.exports.feromanFormPost=async(req,res)=>{
-    var district= req.body.district;
-    var name= req.body.name;
-    var place= req.body.place;
-    var mobile= req.body.mobile;
-    var topic= req.body.topic;
-    var date= req.body.date;
-    var year =req.body.year;
-
-    await feroman.create({
-        district:district,
-        name: name,
-        place:place,
-        mobile:mobile,
-        topic:topic,
-        date:date,
-        year:year,
-    })
-    
-        
-        .then(data => {
-            res.redirect('/pd/feroman');
-        }).catch(err => {
-            console.log("outside",err);
-        });
-  
 };
 module.exports.feromanEdit=async(req,res)=>{
     await feroman.findByPk(req.params.id)
     .then(data => {
-        console.log("inside");
-        res.render('pd/feroman/feromanEdit', { title: 'উপ সহকারী কৃষি কর্মকর্তা প্রশিক্ষণ',msg:'' ,success:'',records: data });
+        console.log("inside",data);
+        res.render('pd/feroman/feromanEdit', { title: 'ফেরোমন ফাঁদ বিতরণ তথ্য ফর্ম',success:'',records: data });
     })
     .catch(err => {
         console.log("outside",err);
-
     })
+
+//  records:result
+
 };
 module.exports.feromanEditPost=async(req,res)=>{
-    var district= req.body.district;
-    var name= req.body.name;
-    var place= req.body.place;
-    var mobile= req.body.mobile;
-    var topic= req.body.topic;
-    var date= req.body.date;
-    var year =req.body.year;
+var pdComment= req.body.pdComment;
+console.log("req.params.id",req.params.id);
+await feroman.update({
+    pdComment:pdComment
+},{
+    where: {id: req.params.id}
+})
 
-    await feroman.update({
-        district:district,
-        name: name,
-        place:place,
-        mobile:mobile,
-        topic:topic,
-        date:date,
-        year:year,
-    },{
-        where: {id: req.params.id}
-    })
     
-        
-        .then(data => {
-            res.redirect('/pd/feroman');
-        }).catch(err => {
-            console.log("outside",err);
-        });
-};
-module.exports.feromanDelete=async(req,res)=>{
-    var feromanDelete = await feroman.findByPk(req.params.id);
-    try {
-        feromanDelete.destroy();
-        res.redirect("/pd/feroman");
-    }
-    catch{
-        console.log("outside",err);
-    }
+    .then(data => {
+        res.redirect('/pd/feroman');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
 };
 module.exports.feromanGallery=async(req,res)=>{
-    await feromanGallery.findAll()
-    .then(data => {
-        console.log("inside");
-        res.render('pd/feroman/feromanGallery', { title: 'উপ সহকারী কৃষি কর্মকর্তা গ্যালারী',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside",err);
-
-    })
-     
-    //  records:result
-
-}; 
+    try{
+        var districts = await dd.findAll();
+        const data = await feromanGallery.findAll();
+        res.render('pd/feroman/feromanGallery', { title: 'ফেরোমন ফাঁদ বিতরণ গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
+};
 module.exports.feromanGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
         var imagePath = "/feromanGallery/" + req.file.filename;
         await feromanGallery.create({
                 image: imagePath,
-            })
-            .then(data => {
+                dd_id: req.body.district,
+                upazilla_id: req.body.upazilla
+        })
+        .then(data => {
             res.redirect('/pd/feromanGallery');
-            }).catch(err => {
-            console.log("file not uploaded successfully");
-            });
-        }
-        else{
-        
-            console.log("file not uploaded successfully");
-        };
-    
-  
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    }
 };
 //feroman controller end  
 //farmerPrize controller
 module.exports.farmerPrize=async(req,res)=>{
-    await farmerPrize.findAll()
-    .then(data => {
+    try{
+        var districts=await dd.findAll();
         console.log("inside");
-        res.render('pd/farmerPrize/farmerPrize', { title: 'উপ সহকারী কৃষি কর্মকর্তা প্রশিক্ষণ তথ্য',success:'', records: data });
-    })
-    .catch(err => {
+        res.render('pd/farmerPrize/farmerPrize', { title: 'কৃষক পুরষ্কার তথ্য',success:'',district:districts });
+    }
+    catch(err){
         console.log("outside",err);
-
-    })
+    }
      
     //  records:result
 
 };
-module.exports.farmerPrizeYear=async(req,res)=>{
-    await farmerPrize.findAll({where: {year: req.body.year}})
+module.exports.farmerPrizeFilter=async(req,res)=>{
+    await farmerPrize.findAll({ 
+        where: {year: req.body.year,upazilla_id: req.body.upazilla}
+    })
     .then(data => {
         res.render('pd/farmerPrize/farmerPrizeTable', {records: data} ,function(err, html) {
             res.send(html);
         });
     })
     .catch(err => {
+        res.render('errorpage',err);    })
+
+};
+module.exports.farmerPrizeDistrictFilter=async(req,res)=>{
+    try{
+        // var dds=await dd.findAll({where: {id: req.body.district}});
+        var upazillass=await upazilla.findAll({where: {dd_id: req.body.district}});
+        console.log("inside");
+        res.send(upazillass)
+    }
+    catch(err){
         console.log("outside",err);
-    })
+    }
+     
 
-};
-module.exports.farmerPrizeForm=async(req,res)=>{
-    res.render('pd/farmerPrize/farmerPrizeForm', { title: 'উপ সহকারী কৃষি কর্মকর্তা প্রশিক্ষণ',msg:'' ,success:''});
-
-};
-module.exports.farmerPrizeFormPost=async(req,res)=>{
-    var district= req.body.district;
-    var name= req.body.name;
-    var place= req.body.place;
-    var mobile= req.body.mobile;
-    var topic= req.body.topic;
-    var date= req.body.date;
-    var year =req.body.year;
-
-    await farmerPrize.create({
-        district:district,
-        name: name,
-        place:place,
-        mobile:mobile,
-        topic:topic,
-        date:date,
-        year:year,
-    })
-    
-        
-        .then(data => {
-            res.redirect('/pd/farmerPrize');
-        }).catch(err => {
-            console.log("outside",err);
-        });
-  
 };
 module.exports.farmerPrizeEdit=async(req,res)=>{
     await farmerPrize.findByPk(req.params.id)
     .then(data => {
-        console.log("inside");
-        res.render('pd/farmerPrize/farmerPrizeEdit', { title: 'উপ সহকারী কৃষি কর্মকর্তা প্রশিক্ষণ',msg:'' ,success:'',records: data });
+        console.log("inside",data);
+        res.render('pd/farmerPrize/farmerPrizeEdit', { title: 'কৃষক পুরষ্কার ফর্ম',success:'',records: data });
     })
     .catch(err => {
         console.log("outside",err);
-
     })
+
+//  records:result
+
 };
 module.exports.farmerPrizeEditPost=async(req,res)=>{
-    var district= req.body.district;
-    var name= req.body.name;
-    var place= req.body.place;
-    var mobile= req.body.mobile;
-    var topic= req.body.topic;
-    var date= req.body.date;
-    var year =req.body.year;
+var pdComment= req.body.pdComment;
+console.log("req.params.id",req.params.id);
+await farmerPrize.update({
+    pdComment:pdComment
+},{
+    where: {id: req.params.id}
+})
 
-    await farmerPrize.update({
-        district:district,
-        name: name,
-        place:place,
-        mobile:mobile,
-        topic:topic,
-        date:date,
-        year:year,
-    },{
-        where: {id: req.params.id}
-    })
     
-        
-        .then(data => {
-            res.redirect('/pd/farmerPrize');
-        }).catch(err => {
-            console.log("outside",err);
-        });
-};
-module.exports.farmerPrizeDelete=async(req,res)=>{
-    var farmerPrizeDelete = await farmerPrize.findByPk(req.params.id);
-    try {
-        farmerPrizeDelete.destroy();
-        res.redirect("/pd/farmerPrize");
-    }
-    catch{
-        console.log("outside",err);
-    }
+    .then(data => {
+        res.redirect('/pd/farmerPrize');
+    }).catch(err => {
+        res.render('errorpage',err);
+    });
 };
 module.exports.farmerPrizeGallery=async(req,res)=>{
-    await farmerPrizeGallery.findAll()
-    .then(data => {
-        console.log("inside");
-        res.render('pd/farmerPrize/farmerPrizeGallery', { title: 'উপ সহকারী কৃষি কর্মকর্তা গ্যালারী',success:'', records: data });
-    })
-    .catch(err => {
-        console.log("outside",err);
-
-    })
-     
-    //  records:result
-
-}; 
+    try{
+        var districts = await dd.findAll();
+        const data = await farmerPrizeGallery.findAll();
+        res.render('pd/farmerPrize/farmerPrizeGallery', { title: 'কৃষক পুরষ্কার গ্যালারী',success:'', records: data, district:districts });
+    }
+    catch (e) {
+        console.log(e)
+    }
+};
 module.exports.farmerPrizeGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
         var imagePath = "/farmerPrizeGallery/" + req.file.filename;
         await farmerPrizeGallery.create({
                 image: imagePath,
-            })
-            .then(data => {
+                dd_id: req.body.district,
+                upazilla_id: req.body.upazilla
+        })
+        .then(data => {
             res.redirect('/pd/farmerPrizeGallery');
-            }).catch(err => {
-            console.log("file not uploaded successfully");
-            });
-        }
-        else{
-        
-            console.log("file not uploaded successfully");
-        };
-    
-  
+        }).catch(err => {
+            console.log("file not uploaded successfully",err);
+        });
+    }
+    else{
+        console.log("file not uploaded successfully");
+    }
 };
-//farmerPrize controller end        
+//farmerPrize controller end

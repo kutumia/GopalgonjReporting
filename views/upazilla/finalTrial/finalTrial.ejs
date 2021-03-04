@@ -30,15 +30,16 @@
 
                             </div>
                             <div class="col-md-4">
-                                <a href="/upazilla/finalTrailGallery" class="btn btn-success btn-group-sm ">গ্যালারী</a>
+                                <a href="/upazilla/finalTrialGallery" class="btn btn-success btn-group-sm ">গ্যালারী</a>
                             </div>
 
                         </div>
 
                         <div class="table-responsive" id="output"></div>
 
-                        <input type="button" id="btnExport" value="Download PDF" />
-                        <button onclick="exportToExcel('tblexportData', 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন')" class="btn btn-success">Export Table Data To Excel File</button>
+                        <button onclick="exportToPdf()" class="btn btn-success">
+                            Download PDF
+                        </button>                        <button onclick="exportToExcel('tblexportData', 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন')" class="btn btn-success">Export Table Data To Excel File</button>
 
                         <div id="output"></div>
         <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->

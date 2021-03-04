@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কৃষি মেলা তথ্য</title>
+    <title>প্রদর্শনী স্থাপনের চূড়ান্ত প্রতিবেদন তথ্য</title>
 
     <style>
         .flex-container {
@@ -31,7 +31,7 @@
 <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
         <h1>প্রদর্শনী স্থাপনের চূড়ান্ত প্রতিবেদন তথ্য</h1>
-        <p><b>উপজেলার নাম :</b><%= centerName %></p>
+        <p><b>উপজেলার নাম :</b><%= upazilla.upazilla %></p>
         <%if (records.length >0){ %>
             <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
             <thead>
@@ -48,7 +48,6 @@
                 <th>উপজেলা কৃষি অফিসারের মন্তব্য</th>
                 <th>জেলা পরিচালকের মন্তব্য</th>
                 <th>প্রজেক্ট পরিচালকের মন্তব্য</th>
-                <th>যোগ করুন/পরিবর্তন করুন</th>
             </tr>
             </thead>
             <tbody>
@@ -66,8 +65,7 @@
                         <td><%= row.kcomment %></td>
                         <td><%= row.ddComment %></td>
                         <td><%= row.pdComment %></td>
-                        <td><a class="btn btn-primary btn-xs" href="/upazilla/finalTrialEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                        </td>
+                        
                     </tr>
                 <% }) %>
             </tbody>

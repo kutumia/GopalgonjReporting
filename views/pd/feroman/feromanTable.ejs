@@ -9,7 +9,10 @@
         <th>মোবাইল নম্বর</th>
         <th>ফসলের নাম</th>
         <th>লিউরসহ বিতরণকৃত ফেরোমন ফাঁদের সংখ্যা</th>
-        <th>মন্তব্য</th>
+        <th>উপজেলা কৃষি অফিসারের মন্তব্য</th>
+        <th>জেলা পরিচালকের মন্তব্য</th>
+        <th>প্রজেক্ট পরিচালকের মন্তব্য</th>
+        <th>মন্তব্য করুন</th>
     </tr>  
     </thead>
     <tbody>
@@ -23,7 +26,9 @@
                 <td><%= row.crop %></td>
                 <td><%= row.feroman %></td>
                 <td><%= row.comment %></td>
-                
+                <td><%= row.ddComment %></td>
+                <td><%= row.pdComment %></td>
+                <td><a class="btn btn-primary btn-xs" href="/pd/feromanEdit/<%= row.id %>"><i class="fa fa-edit"></i></a></td>
             </tr>
         <% }) %>
     </tbody>
@@ -39,7 +44,9 @@
         <th>মোবাইল নম্বর</th>
         <th>ফসলের নাম</th>
         <th>লিউরসহ বিতরণকৃত ফেরোমন ফাঁদের সংখ্যা</th>
-        <th>মন্তব্য</th>
+        <th>উপজেলা কৃষি অফিসারের মন্তব্য</th>
+        <th>জেলা পরিচালকের মন্তব্য</th>
+        <th>প্রজেক্ট পরিচালকের মন্তব্য</th>
         </tr>
         </thead>
         <tbody>

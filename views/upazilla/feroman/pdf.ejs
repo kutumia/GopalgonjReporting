@@ -31,7 +31,7 @@
 <div style="margin-top: 5px; padding-top: 5px; padding-bottom: 5px; background-color: #ffffffa6;" class="center">
     <div>
         <h1>ফেরোমন ফাঁদের তথ্য</h1>
-        <p><b>উপজেলার নাম :</b><%= centerName %></p>
+        <p><b>উপজেলার নাম :</b><%= upazilla.upazilla %></p>
         <%if (records.length >0){ %>
             <table class="table table-bordered table-striped" id="tblexportData" cellspacing="0" cellpadding="0">
             <thead>
@@ -43,25 +43,24 @@
                 <th>মোবাইল নম্বর</th>
                 <th>ফসলের নাম</th>
                 <th>লিউরসহ বিতরণকৃত ফেরোমন ফাঁদের সংখ্যা</th>
-                <th>মন্তব্য</th>
-                <th>পরিবর্তন/মুছুন</th>
-            </tr>
+                <th>উপজেলা কৃষি অফিসারের মন্তব্য</th>
+                <th>জেলা পরিচালকের মন্তব্য</th>
+                <th>প্রজেক্ট পরিচালকের মন্তব্য</th>
+            </tr>  
             </thead>
             <tbody>
                 <% records.forEach(function(row,index){ %>
                     <tr>
                         <td><%= index+1 %></td>
-                        <td><%= row.district %></td>
                         <td><%= row.upazilla %></td>
-                        <td><%= row.booth %></td>
-                        <td><%= row.technology %></td>
-                        <td><%= row.name%></td>
+                        <td><%= row.name %></td>
+                        <td><%= row.village %></td>
+                        <td><%= row.mobile%></td>
+                        <td><%= row.crop %></td>
+                        <td><%= row.feroman %></td>
                         <td><%= row.comment %></td>
                         <td><%= row.ddComment %></td>
                         <td><%= row.pdComment %></td>
-                        <td><a class="btn btn-primary btn-xs" href="/upazilla/feromanEdit/<%= row.id %>"><i class="fa fa-edit"></i></a>
-                            <a class="btn btn-danger btn-xs" href="/upazilla/feromanDelete/<%= row.id %>"><i class="fa fa-trash"></i></a>
-                        </td>
                     </tr>
                 <% }) %>
             </tbody>
@@ -77,7 +76,9 @@
                 <th>মোবাইল নম্বর</th>
                 <th>ফসলের নাম</th>
                 <th>লিউরসহ বিতরণকৃত ফেরোমন ফাঁদের সংখ্যা</th>
-                <th>মন্তব্য</th>
+                <th>উপজেলা কৃষি অফিসারের মন্তব্য</th>
+                <th>জেলা পরিচালকের মন্তব্য</th>
+                <th>প্রজেক্ট পরিচালকের মন্তব্য</th>
                 </tr>
                 </thead>
                 <tbody>

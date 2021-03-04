@@ -35,8 +35,10 @@
 
                         <div class="table-responsive" id="output"></div>
 
-                        <input type="button" id="btnExport" value="Download PDF" />
-                        <button onclick="exportToExcel('tblexportData', 'প্রশিক্ষণপ্রাপ্ত কৃষকের তথ্য')" class="btn btn-success">Export Table Data To Excel File</button>
+                        <button onclick="exportToPdf()" class="btn btn-success">
+                            Download PDF
+                        </button>                       
+                         <button onclick="exportToExcel('tblexportData', 'প্রশিক্ষণপ্রাপ্ত কৃষকের তথ্য')" class="btn btn-success">Export Table Data To Excel File</button>
 
                         <div id="output"></div>
         <!--                    <div id="loading" class="loading"><img src="{{ asset('assets/img/icon/loading.gif') }}" alt=""></div>-->
@@ -45,15 +47,14 @@
             </div>
         </div>
 
-
+        
    
 <%- include('../../includes/footer')-%>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     async function exportToPdf() {
         var year = $('#year').val();
-
-        const { data } = await axios.post(`/upazilla/generatePdftrainedFarmer`,{year: year, center:center});
+        const { data } = await axios.post(`/upazilla/generatePdftrainedFarmer`,{year: year});
         var mywindow = window.open("", "PRINT", "height=400,width=600");
         mywindow.document.write(data.html);
         mywindow.document.close(); // necessary for IE >= 10

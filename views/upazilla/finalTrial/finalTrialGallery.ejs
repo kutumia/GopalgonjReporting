@@ -15,8 +15,8 @@
 
         <div class="container gallery-container">
           <form
-            action="/pd/finalTrailGalleryPost"
-            id="finalTrailForm"
+            action="/upazilla/finalTrialGalleryPost"
+            id="finalTrialForm"
             class="form-horizontal"
             method="post"
             role="form"
@@ -34,27 +34,6 @@
                 />
               </div>
 
-              <div class="form-group col-md-4">
-                <label for="district">বাছুন:</label>
-                <select id="district" name="district" class="form-control">
-                  <option value="">জেলা বাছুন:</option>
-                  <%if (district.length >0){ %> <%
-                  district.forEach(function(row){ %>
-                  <option value="<%= row.id %>"><%= row.district %></option>
-                  <% }) %> <% } %>
-                </select>
-              </div>
-
-              <div class="form-group col-md-4">
-                <div class="form-group">
-                  <label for="district">উপজেলা :</label>
-                  <select name="upazilla" id="upazilla" class="form-control">
-                    <option value="0" disabled="true" selected="true">
-                      উপজেলা বাছুন
-                    </option>
-                  </select>
-                </div>
-              </div>
               <div class="form-group col-md-4">
                 <label for="district"></label>
                 <input

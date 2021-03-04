@@ -25,7 +25,12 @@ const feromanGallery = db.feromanGallery;
 const farmerPrizeGallery = db.farmerPrizeGallery;
 
 const multer = require("multer");
+
+const fs = require("fs");
 const path = require("path");
+
+let pdf = require("html-pdf");
+let ejs = require("ejs");
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -538,6 +543,48 @@ module.exports.trainedFarmerGalleryPost=async(req,res)=>{
         console.log("file not uploaded successfully");
     }
 };
+module.exports.generatePdftrainedFarmer = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await trainedFarmer.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/trainedFarmer/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //trainedFarmer controller end
 
 //initialTrial controller
@@ -633,7 +680,7 @@ module.exports.initialTrialGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await initialTrialGallery.findAll();
-        res.render('upazilla/initialTrial/initialTrailGallery', { title: 'প্রদর্শনীর প্রাথমিক প্রতিবেদন গ্যালারী',success:'',records: data, district:districts });
+        res.render('upazilla/initialTrial/initialTrialGallery', { title: 'প্রদর্শনীর প্রাথমিক প্রতিবেদন গ্যালারী',success:'',records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -645,7 +692,7 @@ module.exports.initialTrialGalleryPost=async(req,res)=>{
       try{
         var imagePath = "/primaryPresentationGallery/" + req.file.filename;
         const data = await upazilla.findByPk(req.session.user_id);
-        const initialTrailGalleryPost = await initialTrailGallery.create({
+        const initialTrialGalleryPost = await initialTrialGallery.create({
           image: imagePath,
           dd_id: data.dd_id,
           upazilla_id: req.session.user_id
@@ -659,6 +706,48 @@ module.exports.initialTrialGalleryPost=async(req,res)=>{
     else{
         console.log("file not uploaded successfully");
     }
+};
+module.exports.generatePdftrainedFarmer = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await initialTrial.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/trainedFarmer/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
 };
 //initialTrial controller end
 
@@ -750,28 +839,28 @@ module.exports.finalTrialEdit = async (req, res) => {
       console.log("outside", err);
     });
 };
-module.exports.finalTrailGallery=async(req,res)=>{
+module.exports.finalTrialGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await finalTrialGallery.findAll();
-        res.render('upazilla/finalTrial/finalTrailGallery', { title: 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন গ্গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/finalTrial/finalTrialGallery', { title: 'প্রদর্শনীর চূড়ান্ত প্রতিবেদন গ্গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
     }
 };
-module.exports.finalTrailGalleryPost=async(req,res)=>{
+module.exports.finalTrialGalleryPost=async(req,res)=>{
     const path = req.file && req.file.path;
     if(path){
       try{
         var imagePath = "/finalPresentationGallery/" + req.file.filename;
         const data = await upazilla.findByPk(req.session.user_id);
-        const finalTrailGalleryPost = await finalTrailGallery.create({
+        const finalTrialGalleryPost = await finalTrialGallery.create({
           image: imagePath,
           dd_id: data.dd_id,
           upazilla_id: req.session.user_id
         })
-        res.redirect('/upazilla/finalTrailGallery');
+        res.redirect('/upazilla/finalTrialGallery');
       }
       catch (e) {
         console.log(e)
@@ -780,6 +869,48 @@ module.exports.finalTrailGalleryPost=async(req,res)=>{
     else{
         console.log("file not uploaded successfully");
     }
+};
+module.exports.generatePdftrainedFarmer = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await finalTrial.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/trainedFarmer/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
 };
 //finalTrial controller end
 
@@ -874,7 +1005,7 @@ module.exports.agriFairEdit = async (req, res) => {
     .then((data) => {
       console.log("inside");
       res.render("upazilla/agriFair/agriFairEdit", {
-        title: "মাঠ দিবস তথ্য",
+        title: "কৃষি মেলা তথ্য",
         msg: "",
         success: "",
         records: data,
@@ -883,7 +1014,7 @@ module.exports.agriFairEdit = async (req, res) => {
     .catch((err) => {
       console.log("outside");
       res.render("upazilla/agriFair/agriFairEdit", {
-        title: "মাঠ দিবস তথ্য",
+        title: "কৃষি মেলা তথ্য",
         msg: "",
         success: "",
         records: err,
@@ -933,7 +1064,7 @@ module.exports.agriFairGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await agriFairGallery.findAll();
-        res.render('upazilla/agriFair/agriFairGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/agriFair/agriFairGallery', { title: 'কৃষি মেলা গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -960,6 +1091,48 @@ module.exports.agriFairGalleryPost=async(req,res)=>{
     else{
         console.log("file not uploaded successfully");
     }
+};
+module.exports.generatePdfagriFair = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await agriFair.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/agriFair/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
 };
 //agriFair controller end
 
@@ -1094,7 +1267,7 @@ module.exports.fieldDayGallery=async(req,res)=>{
         console.log("field day starts ---------------------------");
         var districts = await dd.findAll();
         const data = await fieldDayGallery.findAll();
-        res.render('upazilla/fieldDay/fieldDayGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/fieldDay/fieldDayGallery', { title: 'মাঠ দিবস গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -1121,6 +1294,48 @@ module.exports.fieldDayGalleryPost=async(req,res)=>{
     else{
         console.log("file not uploaded successfully");
     }
+};
+module.exports.generatePdffieldDay = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await fieldDay.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/fieldDay/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
 };
 //fieldDay controller end
 
@@ -1217,7 +1432,7 @@ module.exports.irrigationEdit = async (req, res) => {
     .then((data) => {
       console.log("inside");
       res.render("upazilla/irrigation/irrigationEdit", {
-        title: "মাঠ দিবস তথ্য",
+        title: "সেচ অবকাঠামো নির্মাণ তথ্য",
         msg: "",
         success: "",
         records: data,
@@ -1296,6 +1511,48 @@ module.exports.irrigationGalleryPost=async(req,res)=>{
     else{
         console.log("file not uploaded successfully");
     };
+};
+module.exports.generatePdfirrigation = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await irrigation.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/irrigation/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
 };
 //irrigation controller end
 
@@ -1477,6 +1734,48 @@ module.exports.machineryGalleryPost=async(req,res)=>{
         console.log("file not uploaded successfully");
     };
 };
+module.exports.generatePdfmachinery = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await machinery.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/machinery/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //machinery controller end
 
 //motivation controller
@@ -1626,7 +1925,7 @@ module.exports.motivationGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await motivationGallery.findAll();
-        res.render('upazilla/motivation/motivationGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/motivation/motivationGallery', { title: 'উদ্বুদ্ধকরণ ভ্রমণ গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -1654,6 +1953,48 @@ module.exports.motivationGalleryPost=async(req,res)=>{
         console.log("file not uploaded successfully");
     }
 };
+module.exports.generatePdfmotivation = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await motivation.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/motivation/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //motivation controller end
 
 //feroman controller
@@ -1665,7 +2006,7 @@ module.exports.feroman = async (req, res) => {
     .then((data) => {
       console.log("inside");
       res.render("upazilla/feroman/feroman", {
-        title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+        title: "ফেরোমন ফাঁদ বিতরণ তথ্য",
         success: "",
         records: data,
       });
@@ -1704,7 +2045,7 @@ module.exports.feromanForm = async (req, res) => {
   var dds = ddss.district;
   try {
     res.render("upazilla/feroman/feromanForm", {
-      title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+      title: "ফেরোমন ফাঁদ বিতরণ তথ্য",
       msg: "",
       success: "",
       dds: dds,
@@ -1753,7 +2094,7 @@ module.exports.feromanEdit = async (req, res) => {
     .then((data) => {
       console.log("inside");
       res.render("upazilla/feroman/feromanEdit", {
-        title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+        title: "ফেরোমন ফাঁদ বিতরণ তথ্য",
         msg: "",
         success: "",
         records: data,
@@ -1806,7 +2147,7 @@ module.exports.feromanGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await feromanGallery.findAll();
-        res.render('upazilla/feroman/feromanGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/feroman/feromanGallery', { title: 'ফেরোমন ফাঁদ বিতরণ গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -1831,6 +2172,48 @@ module.exports.feromanGalleryPost=async(req,res)=>{
         console.log("file not uploaded successfully");
     }
 };
+module.exports.generatePdfferoman = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await feromans.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/feroman/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+};
 //feroman controller end
 
 //farmerPrize controller
@@ -1842,7 +2225,7 @@ module.exports.farmerPrize = async (req, res) => {
     .then((data) => {
       console.log("inside");
       res.render("upazilla/farmerPrize/farmerPrize", {
-        title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+        title: "কৃষক পুরষ্কার তথ্য",
         success: "",
         records: data,
       });
@@ -1881,7 +2264,7 @@ module.exports.farmerPrizeForm = async (req, res) => {
   var dds = ddss.district;
   try {
     res.render("upazilla/farmerPrize/farmerPrizeForm", {
-      title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+      title: "কৃষক পুরষ্কার তথ্য",
       msg: "",
       success: "",
       dds: dds,
@@ -1929,7 +2312,7 @@ module.exports.farmerPrizeEdit = async (req, res) => {
     .then((data) => {
       console.log("inside");
       res.render("upazilla/farmerPrize/farmerPrizeEdit", {
-        title: "উদ্বুদ্ধকরণ ভ্রমণ তথ্য",
+        title: "কৃষক পুরষ্কার তথ্য",
         msg: "",
         success: "",
         records: data,
@@ -1982,7 +2365,7 @@ module.exports.farmerPrizeGallery=async(req,res)=>{
     try{
         var districts = await dd.findAll();
         const data = await farmerPrizeGallery.findAll();
-        res.render('upazilla/farmerPrize/farmerPrizeGallery', { title: 'কৃষক প্রশিক্ষন গ্যালারী',success:'', records: data, district:districts });
+        res.render('upazilla/farmerPrize/farmerPrizeGallery', { title: 'কৃষক পুরষ্কার গ্যালারী',success:'', records: data, district:districts });
     }
     catch (e) {
         console.log(e)
@@ -2006,5 +2389,47 @@ module.exports.farmerPrizeGalleryPost=async(req,res)=>{
     else{
         console.log("file not uploaded successfully");
     }
+};
+module.exports.generatePdffarmerPrize = async (req, res) => {
+  try {
+    var upazillas= await upazilla.findOne({
+      where: { id: req.session.user_id },
+    })
+  var data= await farmerPrize.findAll({
+      where: { year: req.body.year, upazilla_id: req.session.user_id },
+    })
+      ejs.renderFile(
+          path.join(__dirname, "../views/upazilla/farmerPrize/", "pdf.ejs"),
+          { records: data,upazilla:upazillas,dirname: __dirname },
+          (err, data) => {
+            if (err) {
+              console.log("error", err);
+              res.send(err);
+            } else {
+              var assesPath = path.join(__dirname, "../public/");
+              // console.log(assesPath);
+              assesPath = assesPath.replace(new RegExp(/\\/g), "/");
+
+              var options = {
+                height: "11.25in",
+                width: "18.5in",
+                header: {
+                  height: "20mm",
+                },
+                footer: {
+                  height: "20mm",
+                },
+                base: "file:///" + assesPath,
+              };
+              res.json({ html: data });
+            }
+          }
+      )
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
 };
 //farmerPrize controller end

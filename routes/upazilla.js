@@ -63,8 +63,8 @@ const {
   trainedFarmerGalleryPost,
   initialTrialGallery,
   initialTrialGalleryPost,
-  finalTrailGallery,
-  finalTrailGalleryPost,
+  finalTrialGallery,
+  finalTrialGalleryPost,
   agriFairGallery,
   agriFairGalleryPost,
   fieldDayGallery,
@@ -85,7 +85,8 @@ const {
   feromanFormPost,
   feromanEdit,
   feromanDelete,
-
+  generatePdfferoman,
+  
   farmerPrizeGallery,
   farmerPrizeGalleryPost,
   farmerPrizeEditPost,
@@ -95,6 +96,7 @@ const {
   farmerPrizeFormPost,
   farmerPrizeEdit,
   farmerPrizeDelete,
+  generatePdfagriFair,generatePdffieldDay,generatePdfirrigation,generatePdfmachinery,generatePdfmotivation,generatePdffarmerPrize,
 
   uploadfarmerPrize,
   uploadferoman,
@@ -145,11 +147,11 @@ router.post("/finalTrialYear", finalTrialYear);
 router.get("/finalTrialForm", finalTrialForm);
 router.post("/finalTrialFormPost/:id", finalTrialFormPost);
 router.get("/finalTrialEdit/:id", finalTrialEdit);
-router.get("/finalTrailGallery", finalTrailGallery);
+router.get("/finalTrialGallery", finalTrialGallery);
 router.post(
-  "/finalTrailGalleryPost",
+  "/finalTrialGalleryPost",
   uploadFinalPresentation,
-  finalTrailGalleryPost
+  finalTrialGalleryPost
 );
 
 router.get("/agriFair", agriFair);
@@ -161,6 +163,8 @@ router.post("/agriFairEditPost/:id", agriFairEditPost);
 router.get("/agriFairDelete/:id", agriFairDelete);
 router.get("/agriFairGallery", agriFairGallery);
 router.post("/agriFairGalleryPost", uploadagriFair, agriFairGalleryPost);
+router.post('/generatePdfagriFair',generatePdfagriFair);
+
 
 router.get("/fieldDay", fieldDay);
 router.post("/fieldDayYear", fieldDayYear);
@@ -171,6 +175,7 @@ router.post("/fieldDayEditPost/:id", fieldDayEditPost);
 router.get("/fieldDayDelete/:id", fieldDayDelete);
 router.get("/fieldDayGallery", fieldDayGallery);
 router.post("/fieldDayGalleryPost", uploadfieldDay, fieldDayGalleryPost);
+router.post('/generatePdffieldDay',generatePdffieldDay);
 
 router.get("/irrigation", irrigation);
 router.post("/irrigationYear", irrigationYear);
@@ -181,6 +186,7 @@ router.post("/irrigationEditPost/:id", irrigationEditPost);
 router.get("/irrigationDelete/:id", irrigationDelete);
 router.get("/irrigationGallery", irrigationGallery);
 router.post("/irrigationGalleryPost", uploadIrrigation, irrigationGalleryPost);
+router.post('/generatePdfirrigation',generatePdfirrigation);
 
 router.get("/machinery", machinery);
 router.post("/machineryYear", machineryYear);
@@ -191,6 +197,7 @@ router.post("/machineryEditPost/:id", machineryEditPost);
 router.get("/machineryDelete/:id", machineryDelete);
 router.get("/machineryGallery", machineryGallery);
 router.post("/machineryGalleryPost", uploadAgriTools, machineryGalleryPost);
+router.post('/generatePdfmachinery',generatePdfmachinery);
 
 router.get("/motivation", motivation);
 router.post("/motivationYear", motivationYear);
@@ -201,6 +208,7 @@ router.post("/motivationEditPost/:id", motivationEditPost);
 router.get("/motivationDelete/:id", motivationDelete);
 router.get("/motivationGallery", motivationGallery);
 router.post("/motivationGalleryPost", uploadmotivation, motivationGalleryPost);
+router.post('/generatePdfmotivation',generatePdfmotivation);
 
 router.get("/feroman", feroman);
 router.post("/feromanYear", feromanYear);
@@ -211,6 +219,7 @@ router.post("/feromanEditPost/:id", feromanEditPost);
 router.get("/feromanDelete/:id", feromanDelete);
 router.get("/feromanGallery", feromanGallery);
 router.post("/feromanGalleryPost", uploadferoman, feromanGalleryPost);
+router.post('/generatePdfferoman',generatePdfferoman);
 
 router.get("/farmerPrize", farmerPrize);
 router.post("/farmerPrizeYear", farmerPrizeYear);
@@ -221,5 +230,6 @@ router.post("/farmerPrizeEditPost/:id", farmerPrizeEditPost);
 router.get("/farmerPrizeDelete/:id", farmerPrizeDelete);
 router.get("/farmerPrizeGallery", farmerPrizeGallery);
 router.post("/farmerPrizeGalleryPost", uploadfarmerPrize, farmerPrizeGalleryPost);
+router.post('/generatePdffarmerPrize',generatePdffarmerPrize);
 
 module.exports = router;
